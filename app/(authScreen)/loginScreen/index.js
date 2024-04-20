@@ -1,9 +1,11 @@
 import { Text, View } from 'react-native';
 
-export default function Register() {
+const LoginScreen = () => {
   return (
     <View className="flex-1 items-center justify-center bg-white">
-      <Text>Ini page register</Text>
+      <Text>Ini page login</Text>
     </View>
-  );
+  )
 }
+
+export default LoginScreen

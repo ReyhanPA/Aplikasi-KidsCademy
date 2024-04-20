@@ -3,7 +3,7 @@
     "name": "Aplikasi-KidsCademy",
     "slug": "Aplikasi-KidsCademy",
     "version": "1.0.0",
-    "scheme": "kidscademy",
+    "scheme": "aplikasikidscademy",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
