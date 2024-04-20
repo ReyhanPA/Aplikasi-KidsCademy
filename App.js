@@ -4,7 +4,7 @@ import { Text, View } from 'react-native';
 export default function App() {
   return (
     <View className="flex-1 items-center justify-center bg-white">
-      <Text>Open up App.js to start working on your app!</Text>
+      <Text>File ga guna karena make routing expo-router</Text>
       <StatusBar style="auto" />
     </View>
   );

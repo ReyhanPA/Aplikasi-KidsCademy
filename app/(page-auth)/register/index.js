@@ -1,9 +1,9 @@
 import { Text, View } from 'react-native';
 
-export default function Dashboard() {
+export default function Register() {
   return (
     <View className="flex-1 items-center justify-center bg-white">
-      <Text>Ini page dashboard</Text>
+      <Text>Ini page register</Text>
     </View>
   );
 }
