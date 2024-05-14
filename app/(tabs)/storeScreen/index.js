@@ -1,15 +1,25 @@
-import React from "react";
-import { View, Text, Image } from "react-native";
+import React, { useState } from "react";
+import { View, Text, Image, TouchableHighlight, Alert } from "react-native";
 
 const StoreScreen = () => {
+  var energi = 100;
   return (
     <View className="flex flex-column">
       <View className="h-2/6 items-center justify-center">
         <Text className="text-2xl mt-20 py-1 text-center font-bold">Store</Text>
-        <CardWarning
-          title="Energimu Habis"
-          content="kamu bisa mengisinya dengan membeli atau menunggu 10 energi tambahan setiap 30 menit."
-        />
+        {energi < 90 ? (
+          <CardWarning
+            isEnoughEnergy={false}
+            title="Energimu Habis"
+            content="kamu bisa mengisinya dengan membeli atau menunggu 10 energi tambahan setiap 30 menit."
+          />
+        ) : (
+          <CardWarning
+            isEnoughEnergy={true}
+            title="Energimu masih ada"
+            content="Selamat bermain dan jangan lupa mengisinya saat energimu mulai habis ya!"
+          />
+        )}
         <View className="flex-row">
           <StoreStats title="0" desc="Energi" />
           <StoreStats title="Rp.100.000" desc="Saldo" />
@@ -40,21 +50,39 @@ const StoreStats = ({ title, desc }) => {
 };
 
 const StoreItemCard = ({ title, img, desc }) => {
+  const [isPressed, setIsPressed] = useState(false);
+  const handlePress = () => {
+    setIsPressed(!isPressed);
+  };
   return (
-    <View className="w-32 h-32 mx-8 my-8 bg-white border-solid border-2 border-gray-300 rounded-2xl items-center">
-      <Image
-        className="w-16 h-16"
-        source={require("../../../assets/Images/energystore.png")}
-      />
-      <Text className="text-lg font-bold">{title}</Text>
-      <Text className="text-gray-600 text-md text-center">{desc}</Text>
+    <View>
+      <TouchableHighlight onPress={handlePress} underlayColor="transparent">
+        <View
+          className={`w-32 h-32 mx-8 my-8 bg-white border-solid border-2 rounded-2xl items-center ${
+            isPressed ? "border-green-500" : "border-slate-400"
+          }`}
+        >
+          <Image
+            className="w-16 h-16"
+            source={require("../../../assets/Images/energystore.png")}
+          />
+          <Text className="text-lg font-bold">{title}</Text>
+          <Text className="text-gray-600 text-md text-center">{desc}</Text>
+        </View>
+      </TouchableHighlight>
     </View>
   );
 };
 
-const CardWarning = ({ title, content }) => {
+const CardWarning = ({ title, content, isEnoughEnergy }) => {
   return (
-    <View className="w-72 bg-yellow-500 h-32 mx-16 my-4 rounded-3xl border-solid border-4 border-yellow-600 p-4">
+    <View
+      className={`w-72 h-32 mx-16 my-4 rounded-3xl border-solid border-4 border-yellow-600 p-4 ${
+        isEnoughEnergy
+          ? "bg-blue-300 border-blue-500"
+          : "bg-yellow-500 border-yellow-600"
+      }`}
+    >
       <Text className="text-xl text-center font-bold mb-2">{title}</Text>
       <Text className="text-black text-md text-center">{content}</Text>
       <View className="w-4 mx-4 my-24 before:block before:absolute bg-yellow-200 h-2 rounded-lg"></View>
