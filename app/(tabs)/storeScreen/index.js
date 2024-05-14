@@ -32,16 +32,16 @@ const StoreScreen = () => {
 
 const StoreStats = ({ title, desc }) => {
   return (
-    <View className="w-32 h-16 mx-8 my-2 bg-white border-solid border-2 border-gray-300 rounded-2xl justify-center pl-4">
-      <Text className="text-md font-bold">{title}</Text>
-      <Text className="text-gray-600 text-md">{desc}</Text>
+    <View className="w-32 h-16 mx-8 my-2 bg-blue-500 rounded-2xl justify-center pl-4">
+      <Text className="text-white text-md font-bold">{title}</Text>
+      <Text className="text-yellow-100 text-sm">{desc}</Text>
     </View>
   );
 };
 
 const StoreItemCard = ({ title, img, desc }) => {
   return (
-    <View className="w-32 h-32 mx-8 my-8 bg-white border-solid border-4 border-gray-300 rounded-2xl items-center">
+    <View className="w-32 h-32 mx-8 my-8 bg-white border-solid border-2 border-gray-300 rounded-2xl items-center">
       <Image
         className="w-16 h-16"
         source={require("../../../assets/Images/energystore.png")}
