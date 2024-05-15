@@ -50,7 +50,7 @@ const StoreStats = ({ title, desc }) => {
   );
 };
 
-const StoreItemCard = ({ title, img, desc }) => {
+const StoreItemCard = ({ title, desc }) => {
   const [isPressed, setIsPressed] = useState(false);
   const handlePress = () => {
     setIsPressed(!isPressed);

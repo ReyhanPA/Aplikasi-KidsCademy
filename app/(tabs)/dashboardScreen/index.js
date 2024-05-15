@@ -1,12 +1,12 @@
-import { StyleSheet, StatusBar, SafeAreaView, View } from 'react-native';
-import TopBarDashboard from '../../components/TopBarDashboard';
-import BodyDashboard from '../../components/BodyDashboard';
+import { StyleSheet, StatusBar, SafeAreaView } from 'react-native';
+import DashboardTopBar from '../../components/DashboardTopBar';
+import DashboardBody from '../../components/DashboardBody';
 
-const Dashboard = () => {
+const DashboardScreen = () => {
   return (
     <SafeAreaView style={styles.container}>
-      <TopBarDashboard />
-      <BodyDashboard />
+      <DashboardTopBar />
+      <DashboardBody />
     </SafeAreaView>
   )
 }
@@ -19,4 +19,4 @@ const styles = StyleSheet.create({
 });
 
 
-export default Dashboard;
+export default DashboardScreen;

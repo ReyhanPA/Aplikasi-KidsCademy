@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Aplikasi-KidsCademy",
-    "slug": "Aplikasi-KidsCademy",
+    "name": "KidsCademy",
+    "slug": "KidsCademy",
     "version": "1.0.0",
     "scheme": "aplikasikidscademy",
     "orientation": "portrait",
@@ -20,7 +20,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/image/icon.png",
+        "foregroundImage": "./assets/image/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       }
     },
