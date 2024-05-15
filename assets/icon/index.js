@@ -3,6 +3,7 @@ import IconProfile from './profile.svg';
 import IconStore from './store.svg';
 import IconLibrary from './library.svg';
 import IconElectrifity from './electrifity.svg';
+import IconDoubleElecttrify from './double-electrify.svg';
 import IconMedal from './medal.svg';
 
-export { IconDashboard, IconLibrary, IconStore, IconProfile, IconElectrifity, IconMedal };
+export { IconDashboard, IconLibrary, IconStore, IconProfile, IconElectrifity, IconDoubleElecttrify, IconMedal };
