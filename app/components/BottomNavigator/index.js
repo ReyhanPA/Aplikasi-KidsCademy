@@ -5,7 +5,7 @@ import BottomNavigatorItem from "../BottomNavigatorItem";
 const BottomNavigator = ({ state, descriptors, navigation }) => {
 
   return (
-    <View className="flex flex-row h-16 w-full px-4 py-2 items-center justify-between bg-white border-t border-t-slate-300">
+    <View className="flex flex-row h-16 w-full py-2 items-center justify-between bg-white border-t border-t-slate-300">
       {state.routes.map((route, index) => {
         const { options } = descriptors[route.key];
         const label =

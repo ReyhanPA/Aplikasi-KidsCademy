@@ -3,4 +3,4 @@ import Favicon from './favicon.png';
 import Icon from './icon.png';
 import Splash from './splash.png';
 
-export { AdaptiveIcon, Favicon, Icon };
+export { AdaptiveIcon, Favicon, Icon, Splash };
