@@ -19,4 +19,4 @@ const styles = StyleSheet.create({
 });
 
 
-export default Dashboard
+export default Dashboard;
