@@ -8,5 +8,22 @@ import IconMedal from "./medal.svg";
 import IconClick from "./click.svg";
 import IconClickBlack from "./click-black.svg";
 import IconArrowDown from "./arrow-down.svg";
+import IconClock from "./clock.svg";
+import IconArrowFill from "./arrow-fill.svg";
+import IconProfilePicture from "./profile-picture.svg";
 
-export { IconDashboard, IconLibrary, IconStore, IconProfile, IconElectrifity, IconDoubleElecttrify, IconMedal, IconClick, IconClickBlack, IconArrowDown };
+export {
+  IconDashboard,
+  IconLibrary,
+  IconStore,
+  IconProfile,
+  IconElectrifity,
+  IconDoubleElecttrify,
+  IconMedal,
+  IconClick,
+  IconClickBlack,
+  IconArrowDown,
+  IconClock,
+  IconArrowFill,
+  IconProfilePicture
+};

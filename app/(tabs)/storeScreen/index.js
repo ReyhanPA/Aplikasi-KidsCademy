@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, Image, TouchableHighlight, Alert } from "react-native";
+import { View, Text, TouchableHighlight } from "react-native";
 import { IconDoubleElecttrify } from "../../../assets/icon";
 
 const StoreScreen = () => {

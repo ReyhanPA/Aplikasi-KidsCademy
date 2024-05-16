@@ -1,6 +1,5 @@
 import { StyleSheet, StatusBar, SafeAreaView } from 'react-native';
-import DashboardTopBar from '../../components/DashboardTopBar';
-import DashboardBody from '../../components/DashboardBody';
+import { DashboardTopBar, DashboardBody } from '../../components';
 
 const DashboardScreen = () => {
   return (

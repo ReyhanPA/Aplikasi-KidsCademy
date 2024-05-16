@@ -10,7 +10,7 @@ const DashboardTopBar = () => {
         <Text className="text-xl font-semibold text-[#1A8EFD]">XP</Text>
         <Text className="text-xl font-semibold text-black">1000</Text>
       </View>
-      <TouchableOpacity onPress={() => router.push({pathname: "../../leaderboardScreen", params: {userID: 1}})} activeOpacity={0.7}>
+      <TouchableOpacity onPress={() => router.push({pathname: "../../leaderboard"})} activeOpacity={0.7}>
         <View className="flex flex-row h-8 w-16 items-center justify-center bg-[#EFF9FF] rounded-full">
           <IconMedal height={18} width={18} />
           <Text className="text-xl font-semibold text-black items-center">#1</Text>
