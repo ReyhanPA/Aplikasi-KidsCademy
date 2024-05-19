@@ -1,11 +1,13 @@
 import React, { useState } from "react";
-import { View, Text, TouchableOpacity} from "react-native";
+import { View, Text, TouchableOpacity, Modal, StyleSheet } from "react-native";
 import { useNavigation } from '@react-navigation/native';
 
 const ModuleBody = (props) => {
   const { selectedModule } = props;
+
   const [press, setPress] = useState("");
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [modalVisible, setModalVisible] = useState(false);
   const navigation = useNavigation();
 
   const handlePress = (opsi) => {
@@ -20,8 +22,19 @@ const ModuleBody = (props) => {
       setCurrentQuestionIndex(currentQuestionIndex + 1);
       setPress("");
     } else {
-      navigation.goBack();
+      setModalVisible(true);
     }
+  };
+
+  const handleRetry = () => {
+    setCurrentQuestionIndex(0);
+    setPress("");
+    setModalVisible(false);
+  };
+
+  const handleNextModule = () => {
+    setModalVisible(false);
+    navigation.goBack(); // Navigasi kembali ke halaman sebelumnya
   };
 
   const currentQuestion = selectedModule.soal[currentQuestionIndex];
@@ -30,6 +43,7 @@ const ModuleBody = (props) => {
     <View className="flex-1 w-full h-full bg-white px-4">
       <Text className="text-xl font-semibold text-black my-4">Pilih jawaban yang tepat</Text>
       <View className="flex items-center w-full pb-4">
+        <Text className="text-xl font-semibold text-black">Soal {currentQuestionIndex + 1} dari {selectedModule.soal.length}</Text>
         <View className="flex justify-center items-center h-20 w-72 bg-[#53AC65] rounded-2xl mt-4 mb-12">
           <Text className="text-3xl font-medium text-white items-center">{currentQuestion.pertanyaan}</Text>
         </View>
@@ -61,9 +75,63 @@ const ModuleBody = (props) => {
           </TouchableOpacity>
         )}
       </View>
+      <Modal
+        transparent={true}
+        visible={modalVisible}
+        animationType="slide"
+        onRequestClose={() => setModalVisible(false)}>
+        <View style={styles.modalBackground}>
+          <View style={styles.modalContainer}>
+            <Text style={styles.modalTitle}>Selesai!</Text>
+            <Text style={styles.modalMessage}>Anda telah menyelesaikan modul ini.</Text>
+            <TouchableOpacity onPress={handleRetry} style={styles.modalButton}>
+              <Text style={styles.modalButtonText}>Coba Lagi</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={handleNextModule} style={styles.modalButton}>
+              <Text style={styles.modalButtonText}>Modul Selanjutnya</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  modalBackground: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+  },
+  modalContainer: {
+    width: 300,
+    padding: 20,
+    backgroundColor: "white",
+    borderRadius: 10,
+    alignItems: "center",
+  },
+  modalTitle: {
+    fontSize: 24,
+    fontWeight: "bold",
+    marginBottom: 16,
+  },
+  modalMessage: {
+    fontSize: 18,
+    marginBottom: 32,
+  },
+  modalButton: {
+    backgroundColor: "#1A8EFD",
+    borderRadius: 8,
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    marginVertical: 8,
+  },
+  modalButtonText: {
+    fontSize: 18,
+    color: "white",
+  },
+});
 
 
 export default ModuleBody;

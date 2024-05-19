@@ -110,7 +110,6 @@ const dataModul = [
   },
 ]
 
-
 const Module = () => {
   const route = useRoute();
   const moduleID = parseInt(route.params.moduleID, 10);
