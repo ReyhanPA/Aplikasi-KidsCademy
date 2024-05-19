@@ -11,6 +11,7 @@ import IconArrowDown from "./arrow-down.svg";
 import IconClock from "./clock.svg";
 import IconArrowFill from "./arrow-fill.svg";
 import IconProfilePicture from "./profile-picture.svg";
+import IconBack from "./back.svg";
 
 export {
   IconDashboard,
@@ -25,5 +26,6 @@ export {
   IconArrowDown,
   IconClock,
   IconArrowFill,
-  IconProfilePicture
+  IconProfilePicture,
+  IconBack
 };

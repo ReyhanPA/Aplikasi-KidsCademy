@@ -117,7 +117,7 @@ const DashboardBody = () => {
               <View className="h-3 w-3 rounded-full bg-[#58BCEB]"/>
               <View className="h-3 w-3 rounded-full bg-[#58BCEB]"/>
             </View>
-            <TouchableOpacity onPress={() => router.push({pathname: "../../[moduleScreen]", params: {module: item.id}})} activeOpacity={0.7} className="flex-3 justify-between h-28 w-60 my-2 px-4 py-6 rounded-2xl bg-[#0979BD] shadow-lg shadow-black">
+            <TouchableOpacity onPress={() => router.push({pathname: "../../[module]", params: {moduleID: item.id}})} activeOpacity={0.7} className="flex-3 justify-between h-28 w-60 my-2 px-4 py-6 rounded-2xl bg-[#0979BD] shadow-lg shadow-black">
               <View className="flex flex-row items-center gap-2">
                 <Text className="text-3xl font-medium text-white items-center">{item.name}</Text>
                 <IconClick height={25} width={25}/>
@@ -138,7 +138,7 @@ const DashboardBody = () => {
               <View className="h-3 w-3 rounded-full bg-[#58BCEB]"/>
               <View className="h-3 w-3 rounded-full bg-[#58BCEB]"/>
             </View>
-            <TouchableOpacity onPress={() => router.push({pathname: "../../[moduleScreen]", params: {module: item.id}})}  activeOpacity={0.7} key={item.id} className="flex justify-between h-28 w-60 my-2 px-4 py-6 rounded-2xl bg-[#DFE3E6] shadow-lg shadow-black">
+            <TouchableOpacity onPress={() => router.push({pathname: "../../[module]", params: {moduleID: item.id}})}  activeOpacity={0.7} key={item.id} className="flex justify-between h-28 w-60 my-2 px-4 py-6 rounded-2xl bg-[#DFE3E6] shadow-lg shadow-black">
               <View className="flex flex-row items-center gap-2">
                 <Text className="text-3xl font-medium text-black items-center">{item.name}</Text> 
                 <IconClickBlack height={25} width={25}/>
