@@ -7,14 +7,15 @@ const SubjectScreen = () => {
   
   return (
     <SafeAreaView style={styles.container}>
-      <SubjectBody/>
+      <SubjectBody subject={route.params.subject}/>
     </SafeAreaView>
   )
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1
+    flex: 1,
+    paddingTop: StatusBar.currentHeight,
   }
 });
 

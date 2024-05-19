@@ -1,6 +1,5 @@
 import React from "react";
 import { View, ScrollView, Text, TouchableOpacity } from "react-native";
-import { IconClick, IconClickBlack, IconArrowDown } from "../../../assets/icon";
 import { router } from 'expo-router';
 
 const subject = [

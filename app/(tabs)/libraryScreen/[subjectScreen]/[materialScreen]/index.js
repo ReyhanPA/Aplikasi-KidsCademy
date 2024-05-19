@@ -6,14 +6,17 @@ const MaterialScreen = () => {
   
   return (
     <SafeAreaView style={styles.container}>
-
+      <View>
+        <Text className="text-xl font-semibold text-black">Detail {route.params.material}</Text>
+      </View>
     </SafeAreaView>
   )
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1
+    flex: 1,
+    paddingTop: StatusBar.currentHeight,
   }
 });
 
