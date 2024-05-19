@@ -1,12 +1,12 @@
 import { Stack } from "expo-router";
 
-const ModuleLayout = () => {
+const ModuleQuestionLayout = () => {
   return (
     <Stack>
       <Stack.Screen
-        name="[moduleQuestion]"
+        name="index"
         options={{
-          title: "Module",
+          title: "Module Question",
           headerShown: false,
         }}
       />
@@ -14,4 +14,4 @@ const ModuleLayout = () => {
   );
 };
 
-export default ModuleLayout;
+export default ModuleQuestionLayout;
