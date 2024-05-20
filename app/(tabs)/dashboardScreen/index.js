@@ -1,11 +1,22 @@
-import { Text, View } from "react-native";
+import { StyleSheet, StatusBar, SafeAreaView } from 'react-native';
+import DashboardTopBar from '../../components/DashboardTopBar';
+import DashboardBody from '../../components/DashboardBody';
 
-const Dashboard = () => {
+const DashboardScreen = () => {
   return (
-    <View className="flex-1 items-center justify-center bg-white">
-      <Text>Ini page dashboard</Text>
-    </View>
-  );
-};
+    <SafeAreaView style={styles.container}>
+      <DashboardTopBar />
+      <DashboardBody />
+    </SafeAreaView>
+  )
+}
 
-export default Dashboard;
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    paddingTop: StatusBar.currentHeight,
+  }
+});
+
+
+export default DashboardScreen;

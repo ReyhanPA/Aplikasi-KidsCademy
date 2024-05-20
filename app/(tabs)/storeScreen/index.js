@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { View, Text, Image, TouchableHighlight, Alert } from "react-native";
+import { IconDoubleElecttrify } from "../../../assets/icon";
 
 const StoreScreen = () => {
   var energi = 100;
@@ -49,7 +50,7 @@ const StoreStats = ({ title, desc }) => {
   );
 };
 
-const StoreItemCard = ({ title, img, desc }) => {
+const StoreItemCard = ({ title, desc }) => {
   const [isPressed, setIsPressed] = useState(false);
   const handlePress = () => {
     setIsPressed(!isPressed);
@@ -62,10 +63,7 @@ const StoreItemCard = ({ title, img, desc }) => {
             isPressed ? "border-green-500" : "border-slate-400"
           }`}
         >
-          <Image
-            className="w-16 h-16"
-            source={require("../../../assets/Images/energystore.png")}
-          />
+          <IconDoubleElecttrify height={60} width={60} />
           <Text className="text-lg font-bold">{title}</Text>
           <Text className="text-gray-600 text-md text-center">{desc}</Text>
         </View>

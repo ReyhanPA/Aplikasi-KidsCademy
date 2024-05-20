@@ -1,12 +1,12 @@
 import { Stack } from "expo-router";
 
-const LibraryLayout = () => {
+const ModuleLayout = () => {
   return (
-    <Stack screenOptions={{ headerShown: false }}>
+    <Stack >
       <Stack.Screen
         name="index"
         options={{
-          title: "Library",
+          title: "Module",
           headerShown: false,
         }}
       />
@@ -14,4 +14,4 @@ const LibraryLayout = () => {
   );
 };
 
-export default LibraryLayout;
+export default ModuleLayout;

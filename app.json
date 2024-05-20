@@ -1,15 +1,15 @@
 {
   "expo": {
-    "name": "Aplikasi-KidsCademy",
-    "slug": "Aplikasi-KidsCademy",
+    "name": "KidsCademy",
+    "slug": "KidsCademy",
     "version": "1.0.0",
     "scheme": "aplikasikidscademy",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/image/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/splash.png",
-      "resizeMode": "contain",
+      "image": "./assets/image/splash.png",
+      "resizeMode": "cover",
       "backgroundColor": "#ffffff"
     },
     "assetBundlePatterns": [
@@ -20,12 +20,12 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/image/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       }
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/image/favicon.png"
     },
     "plugins": [
       "expo-router"
