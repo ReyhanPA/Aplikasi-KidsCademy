@@ -23,5 +23,28 @@ import IconNoImage from "./no-image.svg";
 import IconAddition from "./addition.svg";
 import IconBasicLogic from "./basic-logic.svg";
 import IconBasketball from "./basketball.svg";
+import IconClock from "./clock.svg";
+import IconArrowFill from "./arrow-fill.svg";
+import IconProfilePicture from "./profile-picture.svg";
+import IconPerson from "./person.svg";
+import IconMoney from "./money.svg";
+import IconXP from "./xp.svg";
 
-export { IconDashboard, IconLibrary, IconStore, IconProfile, IconElectrifity, IconDoubleElecttrify, IconMedal, IconClick, IconClickBlack, IconArrowDown, IconHurufButton, IconBacaButton, IconHitungButton, IconLogikaButton, IconHiburanButton, IconLetterA, IconLetterX, IconLetterY, IconAnimal, IconFruit, IconDragon, IconNoImage, IconAddition, IconBasicLogic, IconBasketball };
+export {
+  IconDashboard, 
+  IconLibrary, 
+  IconStore, 
+  IconProfile, 
+  IconElectrifity, 
+  IconDoubleElecttrify, 
+  IconMedal, 
+  IconClick, 
+  IconClickBlack, 
+  IconArrowDown, IconHurufButton, IconBacaButton, IconHitungButton, IconLogikaButton, IconHiburanButton, IconLetterA, IconLetterX, IconLetterY, IconAnimal, IconFruit, IconDragon, IconNoImage, IconAddition, IconBasicLogic, IconBasketball,
+  IconClock,
+  IconArrowFill,
+  IconProfilePicture,
+  IconPerson,
+  IconMoney,
+  IconXP,
+};

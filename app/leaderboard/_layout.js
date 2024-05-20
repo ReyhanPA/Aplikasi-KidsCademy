@@ -1,12 +1,12 @@
 import { Stack } from "expo-router";
 
-const StackLayout = () => {
+const LeaderboardLayout = () => {
   return (
-    <Stack screenOptions={{ headerShown: false }}>
+    <Stack>
       <Stack.Screen
-        name="(tabs)"
+        name="index"
         options={{
-          title: "KidsCademy",
+          title: "Leaderboard",
           headerShown: false,
         }}
       />
@@ -14,4 +14,4 @@ const StackLayout = () => {
   );
 };
 
-export default StackLayout;
+export default LeaderboardLayout;

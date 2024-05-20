@@ -1,6 +1,7 @@
 import React from "react";
 import { Text, View, TouchableOpacity } from "react-native";
 import { IconElectrifity, IconMedal } from "../../../assets/icon";
+import { router } from 'expo-router';
 
 const DashboardTopBar = () => {
   return (
@@ -9,7 +10,7 @@ const DashboardTopBar = () => {
         <Text className="text-xl font-semibold text-[#1A8EFD]">XP</Text>
         <Text className="text-xl font-semibold text-black">1000</Text>
       </View>
-      <TouchableOpacity activeOpacity={0.7}>
+      <TouchableOpacity onPress={() => router.push({pathname: "../../leaderboard"})} activeOpacity={0.7}>
         <View className="flex flex-row h-8 w-16 items-center justify-center bg-[#EFF9FF] rounded-full">
           <IconMedal height={18} width={18} />
           <Text className="text-xl font-semibold text-black items-center">#1</Text>
