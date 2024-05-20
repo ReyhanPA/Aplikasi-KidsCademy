@@ -31,7 +31,7 @@ const subject = [
     }
   ]
 
-const renderIconAlphabet = (Icon) => {
+const renderIconLibrary = (Icon) => {
   if (Icon === 'Huruf') {
     return (
       <IconHurufButton height={96} width={96}/>
@@ -66,7 +66,7 @@ const LibraryBody = () => {
                       <View className="after:h-10 after:rounded-r-full after:w-5 after:bg-[#FFFFFF] after:absolute after:left-0 after:top-8 after:-z-10"/>
                       <View className="after:h-6 after:rounded-b-full after:w-12 after:bg-[#FFFFFF] after:absolute after:right-12 after:top-0 after:-z-10"/>
                       <View className="after:h-24 after:rounded-xl after:w-24 after:bg-[#FFFFFF] after:absolute after:left-8 after:top-7 after:-z-10">
-                        {renderIconAlphabet(item.name)}
+                        {renderIconLibrary(item.name)}
                       </View>
                     </TouchableOpacity>
                 ))}
