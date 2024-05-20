@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity, Modal, StyleSheet } from "react-native";
 import { IconDoubleElecttrify } from "../../../assets/icon";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -35,10 +35,11 @@ const StoreStats = ({ title, desc }) => {
   );
 };
 
-const StoreItemCard = ({ id, title, desc }) => {
+const StoreItemCard = ({ id, title, desc, setModalVisible }) => {
   const [isPressed, setIsPressed] = useState(false);
   const handlePress = () => {
     setIsPressed(!isPressed);
+    setModalVisible(true);
   };
 
   return (
@@ -67,7 +68,16 @@ const CardWarning = ({ title, content, isEnoughEnergy }) => {
 };
 
 const StoreScreen = () => {
+  const [modalVisible, setModalVisible] = useState(false);
   var energi = 70;
+
+  const handleYa = () => {
+    setModalVisible(false);
+  };
+  
+  const handleTidak = () => {
+    setModalVisible(false);
+  };
 
   return (
     <SafeAreaView className="flex py-2 bg-white flex-column">
@@ -87,11 +97,68 @@ const StoreScreen = () => {
       </View>
       <View className="h-4/6 mt-8 flex-wrap items-center justify-center flex-row">
         {data.map((item) => (
-          <StoreItemCard key={item.id} id={item.id} title={item.energi} desc={item.harga} />
+          <StoreItemCard key={item.id} id={item.id} title={item.energi} desc={item.harga} setModalVisible={setModalVisible}/>
         ))}
       </View>
+      <Modal
+        transparent={true}
+        visible={modalVisible}
+        animationType="slide"
+        onRequestClose={() => setModalVisible(false)}>
+        <View style={styles.modalBackground}>
+          <View style={styles.modalContainer}>
+            <Text style={styles.modalTitle}>Apakah yakin membeli?</Text>
+            <View className="flex flex-row w-full justify-center">
+              <TouchableOpacity className="shadow-md shadow-black" onPress={() => handleYa({ setModalVisible })} style={styles.modalButton}>
+                <Text style={styles.modalButtonText}>Ya</Text>
+              </TouchableOpacity>
+              <TouchableOpacity className="shadow-md shadow-black" onPress={() => handleTidak({ setModalVisible })} style={styles.modalButton}>
+                <Text style={styles.modalButtonText}>Tidak</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      </Modal>
     </SafeAreaView>
   );
 };
+
+const styles = StyleSheet.create({
+  modalBackground: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+  },
+  modalContainer: {
+    width: 300,
+    padding: 20,
+    backgroundColor: "white",
+    borderRadius: 16,
+    alignItems: "center",
+  },
+  modalTitle: {
+    fontSize: 24,
+    fontWeight: "bold",
+    marginBottom: 16,
+  },
+  modalMessage: {
+    fontSize: 18,
+    marginBottom: 16,
+    textAlign: "center",
+  },
+  modalButton: {
+    backgroundColor: "#1A8EFD",
+    borderRadius: 100,
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    marginVertical: 8,
+    marginHorizontal: 16,
+  },
+  modalButtonText: {
+    fontSize: 18,
+    color: "white",
+  },
+});
 
 export default StoreScreen;

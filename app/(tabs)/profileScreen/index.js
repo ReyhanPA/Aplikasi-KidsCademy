@@ -100,19 +100,19 @@ const getIcon = (icon) => {
   }
 };
 
-const handleYa = ({ setModalVisible, setIsLogin }) => {
-  setModalVisible(false);
-  setIsLogin(false);
-  router.push({ pathname: "../../../(authScreen)/loginScreen" })
-};
-
-const handleTidak = ({ setModalVisible }) => {
-  setModalVisible(false);
-};
-
 const ProfileScreen = () => {
   const [isLogin, setIsLogin] = useState(true);
   const [modalVisible, setModalVisible] = useState(false);
+
+  const handleYa = () => {
+    setModalVisible(false);
+    setIsLogin(false);
+    router.push({ pathname: "../../../(authScreen)/loginScreen" })
+  };
+  
+  const handleTidak = () => {
+    setModalVisible(false);
+  };
 
   return (
     <SafeAreaView className="flex-1 py-2 bg-white">
@@ -150,10 +150,10 @@ const ProfileScreen = () => {
           <View style={styles.modalContainer}>
             <Text style={styles.modalTitle}>Apakah yakin keluar akun?</Text>
             <View className="flex flex-row w-full justify-center">
-              <TouchableOpacity className="shadow-md shadow-black" onPress={() => handleYa({ setModalVisible, setIsLogin })} style={styles.modalButton}>
+              <TouchableOpacity className="shadow-md shadow-black" onPress={() => handleYa()} style={styles.modalButton}>
                 <Text style={styles.modalButtonText}>Ya</Text>
               </TouchableOpacity>
-              <TouchableOpacity className="shadow-md shadow-black" onPress={() => handleTidak({ setModalVisible })} style={styles.modalButton}>
+              <TouchableOpacity className="shadow-md shadow-black" onPress={() => handleTidak()} style={styles.modalButton}>
                 <Text style={styles.modalButtonText}>Tidak</Text>
               </TouchableOpacity>
             </View>
