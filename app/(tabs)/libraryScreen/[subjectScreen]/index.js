@@ -1,14 +1,15 @@
 import React from "react";
-import { StyleSheet, SafeAreaView, StatusBar, View, Text } from "react-native";
+import { StyleSheet, SafeAreaView, StatusBar } from "react-native";
 import { useRoute } from '@react-navigation/native';
-import SubjectBody from "../../../components/SubjectBody";
-import DashboardTopBar from "../../../components/DashboardTopBar";
+import { SubjectBody, DashboardTopBar, HeaderNonTabs } from "../../../components";
+
 const SubjectScreen = () => {
   const route = useRoute();
   
   return (
     <SafeAreaView style={styles.container}>
-      <DashboardTopBar />
+      <DashboardTopBar pathname="../../../leaderboardScreen"/>
+      <HeaderNonTabs headerName={`Library > ${route.params.subject}`} />
       <SubjectBody subject={route.params.subject}/>
     </SafeAreaView>
   )

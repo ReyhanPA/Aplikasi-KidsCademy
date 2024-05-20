@@ -4,7 +4,7 @@ const ModuleLayout = () => {
   return (
     <Stack >
       <Stack.Screen
-        name="index"
+        name="[moduleQuestion]"
         options={{
           title: "Module",
           headerShown: false,

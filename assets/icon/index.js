@@ -26,6 +26,7 @@ import IconBasketball from "./basketball.svg";
 import IconClock from "./clock.svg";
 import IconArrowFill from "./arrow-fill.svg";
 import IconProfilePicture from "./profile-picture.svg";
+import IconBack from "./back.svg";
 import IconPerson from "./person.svg";
 import IconMoney from "./money.svg";
 import IconXP from "./xp.svg";
@@ -44,6 +45,7 @@ export {
   IconClock,
   IconArrowFill,
   IconProfilePicture,
+  IconBack,
   IconPerson,
   IconMoney,
   IconXP,

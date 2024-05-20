@@ -1,5 +1,7 @@
-import { StyleSheet, StatusBar, SafeAreaView } from 'react-native';
-import { DashboardTopBar, DashboardBody } from '../../components';
+import React from "react";
+import { StyleSheet, StatusBar, SafeAreaView } from "react-native";
+import { useRoute } from '@react-navigation/native';
+import { HeaderNonTabs, ModuleBody } from "../../components";
 
 const dataModul = [
   {
@@ -108,20 +110,24 @@ const dataModul = [
   },
 ]
 
-const DashboardScreen = () => {
+const Module = () => {
+  const route = useRoute();
+  const moduleID = parseInt(route.params.moduleID, 10);
+  const selectedModule = dataModul.find(modul => modul.id === moduleID);
+
   return (
     <SafeAreaView style={styles.container}>
-      <DashboardTopBar pathname="../../leaderboardScreen" />
-      <DashboardBody data={dataModul}/>
+      <HeaderNonTabs headerName={route.params.moduleName} />
+      <ModuleBody selectedModule={selectedModule}/>
     </SafeAreaView>
-  )
-}
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingTop: StatusBar.currentHeight,
-  }
+  },
 });
 
-export default DashboardScreen;
+export default Module;

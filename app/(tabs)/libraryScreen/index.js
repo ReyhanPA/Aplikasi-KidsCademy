@@ -1,11 +1,11 @@
 import { StyleSheet, SafeAreaView, StatusBar } from "react-native";
 import LibraryBody from "../../components/LibraryBody";
-import DashboardTopBar from "../../components/DashboardTopBar";
+import { DashboardTopBar } from "../../components";
 
 const LibraryScreen = () => {
   return (
     <SafeAreaView style={styles.container}>
-      <DashboardTopBar />
+      <DashboardTopBar pathname="../../leaderboardScreen"/>
       <LibraryBody />
     </SafeAreaView>
   )
