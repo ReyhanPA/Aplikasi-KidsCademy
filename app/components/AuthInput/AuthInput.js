@@ -1,13 +1,9 @@
-import { View, TextInput, Image } from "react-native";
+import { View, TextInput } from "react-native";
 import React from "react";
 
 const AuthInput = ({ value, setValue, placeholder, secureTextEntry }) => {
   return (
     <View className="w-9/12">
-      {/* <Image
-        source={require("../../../assets/icon/" + img + ".svg")}
-        style={{ width: 36, height: 36 }}
-      /> */}
       <TextInput
         className="border-2 border-[#3678DD] rounded-2xl p-2 my-4 mb-4 mx-4"
         value={value}

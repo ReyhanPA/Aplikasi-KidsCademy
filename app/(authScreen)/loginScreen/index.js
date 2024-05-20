@@ -16,7 +16,7 @@ const LoginScreen = () => {
   return (
     <ScrollView
       contentInsetAdjustmentBehavior="automatic"
-      className="flex h-full py-2 bg-white flex-column bg-white"
+      className="flex h-full py-2 bg-white flex-column"
     >
       <SafeAreaView>
         <View className="bg-white">
