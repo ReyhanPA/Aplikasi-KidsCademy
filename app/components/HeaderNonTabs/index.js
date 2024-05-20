@@ -4,7 +4,7 @@ import { router } from 'expo-router';
 import { IconBack } from "../../../assets/icon";
 
 const HeaderNonTabs = (props) => {
-  const { headerName} = props;
+  const { headerName } = props;
 
   return (
     <View className="flex flex-row h-12 items-center px-4 bg-white fixed top-0">

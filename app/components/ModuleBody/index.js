@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { View, Text, TouchableOpacity, Modal, StyleSheet } from "react-native";
 import { useNavigation } from '@react-navigation/native';
 
+let totalBenar = 0;
+
 const ModuleBody = (props) => {
   const { selectedModule } = props;
 
@@ -18,6 +20,9 @@ const ModuleBody = (props) => {
   };
 
   const handleNext = () => {
+    if (press === selectedModule.soal[currentQuestionIndex].jawaban) {
+      totalBenar++;
+    }
     if (currentQuestionIndex < selectedModule.soal.length - 1) {
       setCurrentQuestionIndex(currentQuestionIndex + 1);
       setPress("");
@@ -27,14 +32,16 @@ const ModuleBody = (props) => {
   };
 
   const handleRetry = () => {
+    totalBenar = 0;
     setCurrentQuestionIndex(0);
     setPress("");
     setModalVisible(false);
   };
 
   const handleNextModule = () => {
+    totalBenar = 0;
     setModalVisible(false);
-    navigation.goBack(); // Navigasi kembali ke halaman sebelumnya
+    navigation.goBack();
   };
 
   const currentQuestion = selectedModule.soal[currentQuestionIndex];
@@ -83,13 +90,15 @@ const ModuleBody = (props) => {
         <View style={styles.modalBackground}>
           <View style={styles.modalContainer}>
             <Text style={styles.modalTitle}>Selesai!</Text>
-            <Text style={styles.modalMessage}>Anda telah menyelesaikan modul ini.</Text>
-            <TouchableOpacity onPress={handleRetry} style={styles.modalButton}>
-              <Text style={styles.modalButtonText}>Coba Lagi</Text>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={handleNextModule} style={styles.modalButton}>
-              <Text style={styles.modalButtonText}>Modul Selanjutnya</Text>
-            </TouchableOpacity>
+            <Text style={styles.modalMessage}>Anda berhasil menjawab {totalBenar} dari 2 dengan benar.</Text>
+            <View className="flex flex-row w-full justify-center">
+              <TouchableOpacity className="shadow-md shadow-black" onPress={handleRetry} style={styles.modalButton}>
+                <Text style={styles.modalButtonText}>Ulangi</Text>
+              </TouchableOpacity>
+              <TouchableOpacity className="shadow-md shadow-black" onPress={handleNextModule} style={styles.modalButton}>
+                <Text style={styles.modalButtonText}>Lanjut</Text>
+              </TouchableOpacity>
+            </View>
           </View>
         </View>
       </Modal>
@@ -108,7 +117,7 @@ const styles = StyleSheet.create({
     width: 300,
     padding: 20,
     backgroundColor: "white",
-    borderRadius: 10,
+    borderRadius: 16,
     alignItems: "center",
   },
   modalTitle: {
@@ -118,14 +127,16 @@ const styles = StyleSheet.create({
   },
   modalMessage: {
     fontSize: 18,
-    marginBottom: 32,
+    marginBottom: 16,
+    textAlign: "center",
   },
   modalButton: {
     backgroundColor: "#1A8EFD",
-    borderRadius: 8,
+    borderRadius: 100,
     paddingVertical: 10,
     paddingHorizontal: 20,
     marginVertical: 8,
+    marginHorizontal: 16,
   },
   modalButtonText: {
     fontSize: 18,

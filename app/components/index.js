@@ -5,6 +5,8 @@ import DashboardBody from "./DashboardBody";
 import LeaderboardBody from "./LeaderboardBody";
 import ModuleBody from "./ModuleBody";
 import HeaderNonTabs from "./HeaderNonTabs";
+import MaterialBody from "./MaterialBody";
+import SubjectBody from "./SubjectBody";
 
 export {
   BottomNavigator,
@@ -13,5 +15,7 @@ export {
   DashboardBody,
   LeaderboardBody,
   ModuleBody,
-  HeaderNonTabs
+  HeaderNonTabs,
+  MaterialBody,
+  SubjectBody
 };

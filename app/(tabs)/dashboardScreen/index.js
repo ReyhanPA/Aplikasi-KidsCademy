@@ -111,7 +111,7 @@ const dataModul = [
 const DashboardScreen = () => {
   return (
     <SafeAreaView style={styles.container}>
-      <DashboardTopBar />
+      <DashboardTopBar pathname="../../leaderboardScreen" />
       <DashboardBody data={dataModul}/>
     </SafeAreaView>
   )
