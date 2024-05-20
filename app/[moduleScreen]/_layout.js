@@ -2,7 +2,7 @@ import { Stack } from "expo-router";
 
 const ModuleLayout = () => {
   return (
-    <Stack>
+    <Stack >
       <Stack.Screen
         name="index"
         options={{
