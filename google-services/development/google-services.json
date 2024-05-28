@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "592399717445",
+    "project_id": "kidscademy-dev",
+    "storage_bucket": "kidscademy-dev.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:592399717445:android:027299db0c1a7b25d33f2c",
+        "android_client_info": {
+          "package_name": "com.kidscademy.kidscademy.dev"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD7Ph2Fr4OVzeBZXsj2-_Ku6--fbOArg7Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,16 +1,62 @@
 import React, { useState } from "react";
-import { Text, View, TextInput, ScrollView } from "react-native";
+import { Text, View, ScrollView } from "react-native";
+import { TextInput, HelperText } from "react-native-paper";
+import { styled } from "nativewind";
 import { SafeAreaView } from "react-native-safe-area-context";
 import AuthButton from "../../components/AuthButton/AuthButton";
 import { router } from "expo-router";
-import AuthInput from "../../components/AuthInput/AuthInput";
+import { useAuth } from "../../../contexts/AuthProvider";
+
+const StyledTextInput = styled(TextInput);
+const StyledHelperText = styled(HelperText);
 
 const LoginScreen = () => {
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [errors, setErrors] = useState({
+    email: "",
+    password: ""
+  })
+  const { signIn } = useAuth();
 
-  const onLoginPressed = () => {
-    console.warn("Log in");
+  const validate = () => {
+    let newErrors = {
+      email: "",
+      password: ""
+    };
+
+    if (!email) {
+      newErrors.email = "Email is required";
+    }
+
+    if (!password) {
+      newErrors.password = "Password is required";
+    }
+
+    return newErrors;
+  }
+
+  const handleSignIn = () => {
+    const findErrors = validate();
+    if (Object.values(findErrors).some(value => value !== "")) {
+      setErrors(findErrors);
+    } else {
+      signIn(email, password).then(res=>{
+        console.log("sign in success", res)
+        router.replace("../../(tabs)/dashboardScreen")
+      }).catch((error)=>{
+          let newErrors = {
+              email: "",
+              password:""
+          }
+          if (error.code === "auth/invalid-email"){
+              newErrors.email = "Email or password invalid.";
+          } else {
+              newErrors.email = "Something went wrong.";
+          }
+          setErrors(newErrors)
+      });
+    }
   };
 
   return (
@@ -33,25 +79,43 @@ const LoginScreen = () => {
               Where Learning Feels Fun
             </Text>
           </View>
-          <View className="flex mt-10 mb-16 justify-center items-center">
+          <View className="flex mt-8 mb-8 justify-center items-center">
             <Text className="text-lg text-slate-400 font-bold m-0 p-0">
               Masuk
             </Text>
           </View>
         </View>
         <View className="bg-white items-center">
-          <AuthInput
-            value={username}
-            setValue={setUsername}
-            placeholder="Username"
+          <StyledTextInput
+            className="w-8/12 h-12 rounded-2xl mx-4 bg-white"
+            outlineColor="#3678DD"
+            activeOutlineColor="#3678DD"
+            mode="outlined"
+            label="Email"
+            value={email}
+            onChangeText={(email) => {
+              setErrors(errors => ({ ...errors, email: "" })),
+              setEmail(email)
+            }}
+            error={errors.email !== ""}
           />
-          <AuthInput
+          <StyledHelperText type="error" visible={errors.email !== ""}>{errors.email}</StyledHelperText>
+          <StyledTextInput
+            className="w-8/12 h-12 rounded-2xl mx-4 bg-white"
+            outlineColor="#3678DD"
+            activeOutlineColor="#3678DD"
+            mode="outlined"
+            label="Password"
             value={password}
-            setValue={setPassword}
-            placeholder="Password"
+            onChangeText={(password) => {
+              setErrors(errors => ({ ...errors, password: "" })),
+              setPassword(password)
+            }}
+            error={errors.password !== ""}
             secureTextEntry={true}
           />
-          <AuthButton onPress={onLoginPressed} text="Masuk" />
+          <StyledHelperText  type="error" visible={errors.password !== ""}>{errors.password}</StyledHelperText>
+          <AuthButton onPress={handleSignIn} text="Masuk" />
           <Text className="text-md text-slate-400 font-bold">atau</Text>
           <AuthButton
             onPress={() =>

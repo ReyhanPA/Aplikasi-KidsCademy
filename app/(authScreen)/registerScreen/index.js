@@ -1,24 +1,84 @@
 import React, { useState } from "react";
-import { Text, View, TextInput, ScrollView } from "react-native";
+import { Text, View,  ScrollView } from "react-native";
+import { TextInput, HelperText } from "react-native-paper";
+import { styled } from "nativewind";
 import { SafeAreaView } from "react-native-safe-area-context";
 import AuthButton from "../../components/AuthButton/AuthButton";
-import AuthInput from "../../components/AuthInput/AuthInput";
 import { router } from "expo-router";
+import { useAuth } from "../../../contexts/AuthProvider";
+
+const StyledTextInput = styled(TextInput);
+const StyledHelperText = styled(HelperText);
 
 const RegisterScreen = () => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [confirmpassword, setConfPassword] = useState("");
+  const [repeatPassword, setRepeatPassword] = useState("");
+  const [errors, setErrors] = useState({
+    username: "",
+    email: "",
+    password: "",
+    repeatPassword: ""
+  })
+  const { signUp } = useAuth();
 
-  const onRegisterPressed = () => {
-    console.warn("Register");
+  const validate = () => {
+    let newErrors = {
+      username: "",
+      email: "",
+      password: "",
+      repeatPassword: ""
+    };
+
+    if (!username) {
+      newErrors.username = "Username is required";
+    }
+
+    if (!email) {
+      newErrors.email = "Email is required";
+    }
+
+    if (!password) {
+      newErrors.password = "Password is required";
+    }
+
+    if (!repeatPassword) {
+      newErrors.repeatPassword = "Repeat Password is required";
+    } else if (password !== repeatPassword){
+        newErrors.repeatPassword = "Repeat Password is not equal with password";
+    } 
+
+    return newErrors;
+  }
+
+  const handleSignUp = () => {
+    const findErrors = validate();
+    if (Object.values(findErrors).some(value => value !== "")) {
+      setErrors(findErrors);
+    } else {
+      signUp(email, password).then(res=>{
+        console.log("sign up success", res)
+        router.replace("../../(tabs)/dashboardScreen")
+      }).catch((error)=>{
+          let newErrors = {
+              email: "",
+              password:""
+          }
+          if (error.code === "auth/invalid-email"){
+              newErrors.email = "Email or password invalid.";
+          } else {
+              newErrors.email = "Something went wrong.";
+          }
+          setErrors(newErrors)
+      });
+    }
   };
 
   return (
     <ScrollView
       contentInsetAdjustmentBehavior="automatic"
-      className="flex h-full py-2 bg-white flex-column bg-white"
+      className="flex h-full py-2 bg-white flex-column"
     >
       <SafeAreaView>
         <View className="bg-white">
@@ -35,32 +95,68 @@ const RegisterScreen = () => {
               Where Learning Feels Fun
             </Text>
           </View>
-          <View className="flex mt-10 mb-16 justify-center items-center">
+          <View className="flex mt-8 mb-8 justify-center items-center">
             <Text className="text-lg text-slate-400 font-bold m-0 p-0">
               Daftar
             </Text>
           </View>
         </View>
         <View className="bg-white items-center">
-          <AuthInput
+          <StyledTextInput
+            className="w-8/12 h-12 rounded-2xl mx-4 bg-white"
+            outlineColor="#3678DD"
+            activeOutlineColor="#3678DD"
+            mode="outlined"
             value={username}
-            setValue={setUsername}
-            placeholder="Username"
+            label="Username"
+            onChangeText={(username) => {
+              setErrors(errors => ({ ...errors, username: "" })),
+              setUsername(username)
+            }}
           />
-          <AuthInput value={email} setValue={setEmail} placeholder="Email" />
-          <AuthInput
+          <StyledHelperText type="error" visible={errors.username !== ""}>{errors.username}</StyledHelperText>
+          <StyledTextInput
+            className="w-8/12 h-12 rounded-2xl mx-4 bg-white"
+            outlineColor="#3678DD"
+            activeOutlineColor="#3678DD"
+            mode="outlined"
+            value={email}
+            label="Email"
+            onChangeText={(email) => {
+              setErrors(errors => ({ ...errors, email: "" })),
+              setEmail(email)
+            }}
+          />
+          <StyledHelperText type="error" visible={errors.email !== ""}>{errors.email}</StyledHelperText>
+          <StyledTextInput
+            className="w-8/12 h-12 rounded-2xl mx-4 bg-white"
+            outlineColor="#3678DD"
+            activeOutlineColor="#3678DD"
+            mode="outlined"
             value={password}
-            setValue={setPassword}
-            placeholder="Password"
             secureTextEntry={true}
+            label="Password"
+            onChangeText={(password) => {
+              setErrors(errors => ({ ...errors, password: "" })),
+              setPassword(password)
+            }}
           />
-          <AuthInput
-            value={confirmpassword}
-            setValue={setConfPassword}
-            placeholder="Confirm Password"
+          <StyledHelperText type="error" visible={errors.password !== ""}>{errors.password}</StyledHelperText>
+          <StyledTextInput
+            className="w-8/12 h-12 rounded-2xl mx-4 bg-white"
+            outlineColor="#3678DD"
+            activeOutlineColor="#3678DD"
+            mode="outlined"
+            value={repeatPassword}
             secureTextEntry={true}
+            label="Repeat Password"
+            onChangeText={(repeatPassword) => {
+              setErrors(errors => ({ ...errors, repeatPassword: "" })),
+              setRepeatPassword(repeatPassword)
+            }}
           />
-          <AuthButton onPress={onRegisterPressed} text="Daftar" />
+          <StyledHelperText type="error" visible={errors.repeatPassword !== ""}>{errors.repeatPassword}</StyledHelperText>
+          <AuthButton onPress={handleSignUp} text="Daftar" />
           <Text className="text-md text-slate-400 font-bold">atau</Text>
           <AuthButton
             onPress={() =>
