@@ -3,6 +3,7 @@ import { Text, TouchableOpacity, View, StyleSheet, Modal } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { IconProfilePicture, IconElectrifity, IconMedal, IconMoney, IconPerson, IconXP } from "../../../assets";
 import { router } from "expo-router";
+import { useAuth } from "../../../contexts/AuthProvider";
 
 const ProfileStats = () => {
   return (
@@ -101,13 +102,12 @@ const getIcon = (icon) => {
 };
 
 const ProfileScreen = () => {
-  const [isLogin, setIsLogin] = useState(true);
   const [modalVisible, setModalVisible] = useState(false);
+  const { isLogin, signOut } = useAuth();
 
   const handleYa = () => {
     setModalVisible(false);
-    setIsLogin(false);
-    router.push({ pathname: "../../../(authScreen)/loginScreen" })
+    signOut();
   };
   
   const handleTidak = () => {

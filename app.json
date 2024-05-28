@@ -16,19 +16,41 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.kidscademy.kidscademy.dev",
+      "googleServicesFile": "./google-services/development/GoogleService-Info.plist"
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/image/adaptive-icon.png",
+        "foregroundImage": "./assets/image/icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.kidscademy.kidscademy.dev",
+      "googleServicesFile": "./google-services/development/google-services.json"
     },
     "web": {
       "favicon": "./assets/image/favicon.png"
     },
     "plugins": [
-      "expo-router"
-    ]
+      "expo-router",
+      "@react-native-firebase/app",
+      "@react-native-firebase/auth",
+      [
+        "expo-build-properties",
+        {
+          "ios": {
+            "useFrameworks": "static"
+          }
+        }
+      ]
+    ],
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "fa8fc3bc-f9a9-43ff-81f9-0989eea00f17"
+      }
+    }
   }
 }
