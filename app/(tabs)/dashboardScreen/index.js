@@ -1,5 +1,8 @@
-import { StyleSheet, StatusBar, SafeAreaView } from 'react-native';
-import { DashboardTopBar, DashboardBody } from '../../components';
+import { useEffect, useState } from "react";
+import { StyleSheet, StatusBar, SafeAreaView } from "react-native";
+import { DashboardTopBar, DashboardBody } from "../../components";
+import firestore from "@react-native-firebase/firestore";
+import { QuerySnapshot } from "firebase/firestore";
 
 const dataModul = [
   {
@@ -7,7 +10,7 @@ const dataModul = [
     name: "Modul 1",
     description: "Berhitung tingkat 1",
     done: true,
-    soal : [
+    soal: [
       {
         idSoal: 1,
         pertanyaan: "23 + 65",
@@ -15,7 +18,7 @@ const dataModul = [
         opsiB: "88",
         opsiC: "76",
         opsiD: "95",
-        jawaban: "opsiB"
+        jawaban: "opsiB",
       },
       {
         idSoal: 2,
@@ -24,16 +27,16 @@ const dataModul = [
         opsiB: "88",
         opsiC: "80",
         opsiD: "95",
-        jawaban: "opsiC"
+        jawaban: "opsiC",
       },
-    ]
+    ],
   },
   {
     id: 2,
     name: "Modul 2",
     description: "Berhitung tingkat 2",
     done: true,
-    soal : [
+    soal: [
       {
         idSoal: 1,
         pertanyaan: "43 + 65",
@@ -41,7 +44,7 @@ const dataModul = [
         opsiB: "88",
         opsiC: "76",
         opsiD: "95",
-        jawaban: "opsiA"
+        jawaban: "opsiA",
       },
       {
         idSoal: 2,
@@ -50,16 +53,16 @@ const dataModul = [
         opsiB: "88",
         opsiC: "80",
         opsiD: "100",
-        jawaban: "opsiD"
+        jawaban: "opsiD",
       },
-    ]
+    ],
   },
   {
     id: 3,
     name: "Modul 3",
     description: "Berhitung tingkat 3",
     done: false,
-    soal : [
+    soal: [
       {
         idSoal: 1,
         pertanyaan: "30 + 65",
@@ -67,7 +70,7 @@ const dataModul = [
         opsiB: "88",
         opsiC: "76",
         opsiD: "95",
-        jawaban: "opsiD"
+        jawaban: "opsiD",
       },
       {
         idSoal: 2,
@@ -76,16 +79,16 @@ const dataModul = [
         opsiB: "88",
         opsiC: "70",
         opsiD: "95",
-        jawaban: "opsiC"
+        jawaban: "opsiC",
       },
-    ]
+    ],
   },
   {
     id: 4,
     name: "Modul 4",
     description: "Berhitung tingkat 4",
     done: false,
-    soal : [
+    soal: [
       {
         idSoal: 1,
         pertanyaan: "23 + 66",
@@ -93,7 +96,7 @@ const dataModul = [
         opsiB: "89",
         opsiC: "76",
         opsiD: "95",
-        jawaban: "opsiB"
+        jawaban: "opsiB",
       },
       {
         idSoal: 2,
@@ -102,26 +105,49 @@ const dataModul = [
         opsiB: "88",
         opsiC: "60",
         opsiD: "95",
-        jawaban: "opsiC"
+        jawaban: "opsiC",
       },
-    ]
+    ],
   },
-]
+];
 
 const DashboardScreen = () => {
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    const modulesRef = firestore().collection("modules");
+
+    modulesRef
+    .orderBy("learningPath", "asc")
+    .orderBy("name", "asc")
+    .get()
+    .then((querySnapshot) => {
+      const newData = querySnapshot.docs.map((doc) => {
+        return {
+          id: doc.id,
+          ...doc.data(),
+        };
+      });
+      setData(newData);
+    })
+    .catch((error) => {
+      console.error("Error fetching data: ", error);
+    });
+  }, []);
+
   return (
     <SafeAreaView style={styles.container}>
       <DashboardTopBar pathname="../../leaderboardScreen" />
-      <DashboardBody data={dataModul}/>
+      <DashboardBody data={data} />
     </SafeAreaView>
-  )
-}
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingTop: StatusBar.currentHeight,
-  }
+  },
 });
 
 export default DashboardScreen;
