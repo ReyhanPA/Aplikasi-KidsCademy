@@ -10,11 +10,11 @@ const optionLearningPath = [
   },
   {
     id: 2,
-    label: "3-5"
+    label: "5-6"
   },
   {
     id: 3,
-    label: "6-8"
+    label: "7-8"
   }
 ]
 
