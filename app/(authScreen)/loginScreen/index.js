@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import { Text, View, ScrollView } from "react-native";
+import { Text, View, ScrollView, StyleSheet, StatusBar, SafeAreaView } from "react-native";
 import { TextInput, HelperText } from "react-native-paper";
 import { styled } from "nativewind";
-import { SafeAreaView } from "react-native-safe-area-context";
 import AuthButton from "../../components/AuthButton/AuthButton";
 import { router } from "expo-router";
 import { useAuth } from "../../../contexts/AuthProvider";
+import Spinner from 'react-native-loading-spinner-overlay';
 
 const StyledTextInput = styled(TextInput);
 const StyledHelperText = styled(HelperText);
@@ -17,6 +17,7 @@ const LoginScreen = () => {
     email: "",
     password: ""
   })
+  const [loading, setLoading] = useState(false);
   const { signIn } = useAuth();
 
   const validate = () => {
@@ -41,30 +42,41 @@ const LoginScreen = () => {
     if (Object.values(findErrors).some(value => value !== "")) {
       setErrors(findErrors);
     } else {
+      setLoading(true);
       signIn(email, password).then(res=>{
         console.log("sign in success", res)
         router.replace("../../(tabs)/dashboardScreen")
-      }).catch((error)=>{
-          let newErrors = {
-              email: "",
-              password:""
-          }
-          if (error.code === "auth/invalid-email"){
-              newErrors.email = "Email or password invalid.";
-          } else {
-              newErrors.email = "Something went wrong.";
-          }
-          setErrors(newErrors)
+      }).catch(error => {
+        let newErrors = {
+          email: "",
+          password: ""
+        };
+        if (error.code === "auth/invalid-email") {
+          newErrors.email = "Email or password invalid.";
+        } else {
+          newErrors.email = "Something went wrong.";
+        }
+        setErrors(newErrors);
+      }).finally(() => {
+        setLoading(false);
       });
     }
   };
+
+  if (loading) {
+    return (
+      <SafeAreaView style={styles.container}>
+        <Spinner visible={loading} />
+      </SafeAreaView>
+    );
+  }
 
   return (
     <ScrollView
       contentInsetAdjustmentBehavior="automatic"
       className="flex h-full py-2 bg-white flex-column"
     >
-      <SafeAreaView>
+      <SafeAreaView style={styles.container}>
         <View className="bg-white">
           <View className="flex mt-10 flex-row justify-center items-center">
             <Text className="text-2xl text-[#FBA319] font-bold m-0 p-0">
@@ -128,5 +140,12 @@ const LoginScreen = () => {
     </ScrollView>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    paddingTop: StatusBar.currentHeight,
+  },
+});
 
 export default LoginScreen;
