@@ -62,7 +62,7 @@ const DashboardBody = () => {
   const [loading, setLoading] = useState(true);
   const [openDropdown, setOpenDropdown] = useState(false);
   const [optionDropdown, setOptionDropdown] = useState(optionLearningPath[0].label);
-  const [filterDropdown, setFilterDropdown] = useState([]);
+  const [filterDropdown, setFilterDropdown] = useState(["2-4", "5-6", "7-8"]);
   
   useEffect(() => {
     if (optionDropdown === "Semua") {
