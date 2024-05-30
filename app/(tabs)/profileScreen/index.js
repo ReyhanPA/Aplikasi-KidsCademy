@@ -1,9 +1,10 @@
-import React, { useState } from "react";
-import { Text, TouchableOpacity, View, StyleSheet, Modal } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import React, { useState, useEffect } from "react";
+import { Text, TouchableOpacity, View, StyleSheet, Modal, SafeAreaView, StatusBar } from "react-native";
 import { IconProfilePicture, IconElectrifity, IconMedal, IconMoney, IconPerson, IconXP } from "../../../assets";
 import { router } from "expo-router";
 import { useAuth } from "../../../contexts/AuthProvider";
+import firestore from "@react-native-firebase/firestore";
+import Spinner from 'react-native-loading-spinner-overlay';
 
 const ProfileStats = () => {
   return (
@@ -102,8 +103,33 @@ const getIcon = (icon) => {
 };
 
 const ProfileScreen = () => {
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [modalVisible, setModalVisible] = useState(false);
-  const { isLogin, signOut } = useAuth();
+  const { isLogin, signOut, user } = useAuth();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true);
+      try {
+        const userRef = firestore().collection("users");
+        const querySnapshot = await userRef.get();
+        const newData = querySnapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        setData(newData);
+      } catch (error) {
+        console.error("Error fetching data: ", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  console.log(data);
 
   const handleYa = () => {
     setModalVisible(false);
@@ -113,6 +139,14 @@ const ProfileScreen = () => {
   const handleTidak = () => {
     setModalVisible(false);
   };
+
+  if (loading) {
+    return (
+      <SafeAreaView className="flex-1 py-2 bg-white">
+        <Spinner visible={loading} />
+      </SafeAreaView>
+    );
+  }
 
   return (
     <SafeAreaView className="flex-1 py-2 bg-white">
@@ -165,6 +199,10 @@ const ProfileScreen = () => {
 };
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    paddingTop: StatusBar.currentHeight,
+  },
   modalBackground: {
     flex: 1,
     justifyContent: "center",

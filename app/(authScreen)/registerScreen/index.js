@@ -1,16 +1,18 @@
-import React, { useState } from "react";
-import { Text, View,  ScrollView } from "react-native";
+import React, { useEffect, useState } from "react";
+import { Text, View, ScrollView, StyleSheet, StatusBar, SafeAreaView } from "react-native";
 import { TextInput, HelperText } from "react-native-paper";
 import { styled } from "nativewind";
-import { SafeAreaView } from "react-native-safe-area-context";
 import AuthButton from "../../components/AuthButton/AuthButton";
 import { router } from "expo-router";
 import { useAuth } from "../../../contexts/AuthProvider";
+import firestore from '@react-native-firebase/firestore';
+import Spinner from 'react-native-loading-spinner-overlay';
 
 const StyledTextInput = styled(TextInput);
 const StyledHelperText = styled(HelperText);
 
 const RegisterScreen = () => {
+  const [uid, setUid] = useState("");
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -21,6 +23,7 @@ const RegisterScreen = () => {
     password: "",
     repeatPassword: ""
   })
+  const [loading, setLoading] = useState(false);
   const { signUp } = useAuth();
 
   const validate = () => {
@@ -52,28 +55,52 @@ const RegisterScreen = () => {
     return newErrors;
   }
 
-  const handleSignUp = () => {
+  const handleSignUp = async () => {
     const findErrors = validate();
     if (Object.values(findErrors).some(value => value !== "")) {
       setErrors(findErrors);
     } else {
-      signUp(email, password).then(res=>{
-        console.log("sign up success", res)
-        router.replace("../../(tabs)/dashboardScreen")
-      }).catch((error)=>{
-          let newErrors = {
-              email: "",
-              password:""
-          }
-          if (error.code === "auth/invalid-email"){
-              newErrors.email = "Email or password invalid.";
-          } else {
-              newErrors.email = "Something went wrong.";
-          }
-          setErrors(newErrors)
-      });
+      setLoading(true);
+      try {
+        const res = await signUp(email, password);
+        const uid = res.user.uid;
+        await firestore().collection('users').doc(uid).set({
+          uid: uid,
+          username: username,
+          email: email,
+          energi: 150,
+          xp: 0,
+          ranking: 999,
+          saldo: 50000,
+          moduleDone: [],
+          created_at: firestore.FieldValue.serverTimestamp(),
+          updated_at: null,
+        });
+        router.replace("../../(tabs)/dashboardScreen");
+      } catch (error) {
+        let newErrors = {
+          email: "",
+          password: ""
+        };
+        if (error.code === "auth/invalid-email") {
+          newErrors.email = "Email or password invalid.";
+        } else {
+          newErrors.email = "Something went wrong.";
+        }
+        setErrors(newErrors);
+      } finally {
+        setLoading(false);
+      }
     }
   };
+
+  if (loading) {
+    return (
+      <SafeAreaView style={styles.container}>
+        <Spinner visible={loading} />
+      </SafeAreaView>
+    );
+  }
 
   return (
     <ScrollView
@@ -169,5 +196,12 @@ const RegisterScreen = () => {
     </ScrollView>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    paddingTop: StatusBar.currentHeight,
+  },
+});
 
 export default RegisterScreen;
