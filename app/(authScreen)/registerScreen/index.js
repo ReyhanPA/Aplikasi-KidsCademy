@@ -12,7 +12,6 @@ const StyledTextInput = styled(TextInput);
 const StyledHelperText = styled(HelperText);
 
 const RegisterScreen = () => {
-  const [uid, setUid] = useState("");
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");

@@ -44,7 +44,6 @@ const LoginScreen = () => {
     } else {
       setLoading(true);
       signIn(email, password).then(res=>{
-        console.log("sign in success", res)
         router.replace("../../(tabs)/dashboardScreen")
       }).catch(error => {
         let newErrors = {
