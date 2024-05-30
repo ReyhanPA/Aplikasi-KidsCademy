@@ -21,9 +21,9 @@ const Module = () => {
           ...doc.data(),
         }));
         setData(newData);
-        setLoading(false);
       } catch (error) {
         console.error("Error fetching data: ", error);
+      } finally {
         setLoading(false);
       }
     };
@@ -54,7 +54,7 @@ const Module = () => {
   return (
     <SafeAreaView style={styles.container}>
       <HeaderNonTabs headerName={route.params.moduleName} />
-      <ModuleBody selectedModule={selectedModule} />
+      <ModuleBody selectedModule={selectedModule}/>
     </SafeAreaView>
   );
 };
