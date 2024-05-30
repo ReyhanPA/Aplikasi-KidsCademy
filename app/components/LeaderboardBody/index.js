@@ -38,16 +38,16 @@ const LeaderboardBody = (props) => {
       </View>
       <ScrollView className="flex w-full h-auto border-t bg-white border-[#969696] py-4">
         {data.map((item) => (
-          <View key={item.id} className={`flex flex-row items-center justify-between mb-3 ${item.nama === "Putranto" ? "mx-2 px-2 border border-[#969696] bg-white shadow-md shadow-black rounded-xl" : "mx-4"}`}>
+          <View key={item.id} className={`flex flex-row items-center justify-between mb-3 ${item.username === "Putranto" ? "mx-2 px-2 border border-[#969696] bg-white shadow-md shadow-black rounded-xl" : "mx-4"}`}>
             <View className="flex flex-row justify-center items-center">
-              <View className="flex justify-center items-center h-10 w-10 rounded-full mr-2" style={{ backgroundColor: getColorByRank(item.rank) }}>
-                <Text className="text-xl font-medium text-black">{item.rank}</Text>
+              <View className="flex justify-center items-center h-10 w-10 rounded-full mr-2" style={{ backgroundColor: getColorByRank(item.ranking) }}>
+                <Text className="text-xl font-medium text-black">{item.ranking}</Text>
               </View>
               <IconProfilePicture height={45} width={45} />
-              <Text className="text-xl font-medium text-black ml-2">{item.nama}</Text>
+              <Text className="text-xl font-medium text-black ml-2">{item.username}</Text>
             </View>
             <View>
-              <Text className="text-xl font-normal text-black">{item.score}</Text>
+              <Text className="text-xl font-normal text-black">{item.xp} XP</Text>
             </View>
           </View>
         ))}
