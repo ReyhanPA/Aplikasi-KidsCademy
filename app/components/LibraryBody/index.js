@@ -21,11 +21,6 @@ const subject = [
   },
   {
     id: 4,
-    name: "Logika",
-    color: "#58BCEB",
-  },
-  {
-    id: 5,
     name: "Hiburan",
     color: "#f57180",
   },
