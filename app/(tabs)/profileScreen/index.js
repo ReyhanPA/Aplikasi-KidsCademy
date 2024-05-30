@@ -113,7 +113,7 @@ const ProfileScreen = () => {
     const fetchData = async () => {
       setLoading(true);
       try {
-        if (user && user.uid) {
+        if (user && user.uid && isLogin) {
           const userRef = firestore().collection("users").doc(user.uid);
           const docSnapshot = await userRef.get();
           if (docSnapshot.exists) {
