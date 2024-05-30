@@ -1,4 +1,4 @@
-import { StyleSheet, StatusBar, SafeAreaView, Text } from "react-native";
+import { StyleSheet, StatusBar, SafeAreaView } from "react-native";
 import { DashboardTopBar, DashboardBody } from "../../components";
 
 const DashboardScreen = () => {
