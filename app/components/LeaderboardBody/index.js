@@ -1,6 +1,11 @@
 import React from "react";
 import { ScrollView, View, Text } from "react-native";
-import { IconArrowFill, IconClock, IconProfilePicture } from "../../../assets/icon";
+import {
+  IconArrowFill,
+  IconClock,
+  IconProfilePicture,
+} from "../../../assets/icon";
+import { useState, useAuth, useEffect } from "react";
 
 const getColorByRank = (rank) => {
   switch (rank) {
@@ -16,7 +21,7 @@ const getColorByRank = (rank) => {
 };
 
 const LeaderboardBody = (props) => {
-  const { data } = props;
+  const { data, dataUser } = props;
 
   return (
     <View className="flex-1 w-full h-full bg-white">
@@ -38,16 +43,32 @@ const LeaderboardBody = (props) => {
       </View>
       <ScrollView className="flex w-full h-auto border-t bg-white border-[#969696] py-4">
         {data.map((item) => (
-          <View key={item.id} className={`flex flex-row items-center justify-between mb-3 ${item.username === "Putranto" ? "mx-2 px-2 border border-[#969696] bg-white shadow-md shadow-black rounded-xl" : "mx-4"}`}>
+          <View
+            key={item.id}
+            className={`flex flex-row items-center justify-between mb-3 ${
+              item.username === dataUser.username
+                ? "px-4 border-slate-400 border-2 rounded-2xl"
+                : "mx-4"
+            }`}
+          >
             <View className="flex flex-row justify-center items-center">
-              <View className="flex justify-center items-center h-10 w-10 rounded-full mr-2" style={{ backgroundColor: getColorByRank(item.ranking) }}>
-                <Text className="text-xl font-medium text-black">{item.ranking}</Text>
+              <View
+                className="flex justify-center items-center h-10 w-10 rounded-full mr-2"
+                style={{ backgroundColor: getColorByRank(item.ranking) }}
+              >
+                <Text className="text-xl font-medium text-black">
+                  {item.ranking}
+                </Text>
               </View>
               <IconProfilePicture height={45} width={45} />
-              <Text className="text-xl font-medium text-black ml-2">{item.username}</Text>
+              <Text className="text-xl font-medium text-black ml-2">
+                {item.username}
+              </Text>
             </View>
             <View>
-              <Text className="text-xl font-normal text-black">{item.xp} XP</Text>
+              <Text className="text-xl font-normal text-black">
+                {item.xp} XP
+              </Text>
             </View>
           </View>
         ))}
