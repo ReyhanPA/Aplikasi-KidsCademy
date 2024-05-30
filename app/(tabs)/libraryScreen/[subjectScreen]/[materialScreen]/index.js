@@ -9,7 +9,7 @@ const MaterialScreen = () => {
   return (
     <SafeAreaView style={styles.container}>
       <DashboardTopBar pathname="../../../../leaderboardScreen"/>
-      <HeaderNonTabs headerName={`Konten ${route.params.material}`} />
+      <HeaderNonTabs headerName={`Nonton Video`} />
       <MaterialBody material={route.params.material}/>
     </SafeAreaView>
   )

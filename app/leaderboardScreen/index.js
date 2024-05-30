@@ -1,59 +1,75 @@
 import React from "react";
 import { SafeAreaView, StyleSheet, StatusBar } from "react-native";
 import { HeaderNonTabs, LeaderboardBody } from "../components";
+import { useState, useEffect } from "react";
+import firestore from "@react-native-firebase/firestore";
 
-const data = [
-  {
-    id: 1,
-    rank: 1,
-    nama: "Santi",
-    score: "278 XP",
-  },
-  {
-    id: 2,
-    rank: 2,
-    nama: "Andika",
-    score: "260 XP",
-  },
-  {
-    id: 3,
-    rank: 3,
-    nama: "Putri",
-    score: "250 XP",
-  },
-  {
-    id: 4,
-    rank: 4,
-    nama: "Sumitro",
-    score: "240 XP",
-  },
-  {
-    id: 5,
-    rank: 5,
-    nama: "Putranto",
-    score: "222 XP",
-  },
-  {
-    id: 6,
-    rank: 6,
-    nama: "Hayati",
-    score: "211 XP",
-  },
-  {
-    id: 7,
-    rank: 7,
-    nama: "Kinan",
-    score: "192 XP",
-  },
-  {
-    id: 8,
-    rank: 8,
-    nama: "Anto",
-    score: "80 XP",
-  },
-];
+// const data = [
+//   {
+//     id: 1,
+//     nama: "Santi",
+//     xp: "278",
+//   },
+//   {
+//     id: 2,
+//     nama: "Andika",
+//     xp: "260",
+//   },
+//   {
+//     id: 3,
+//     nama: "Putri",
+//     xp: "250",
+//   },
+//   {
+//     id: 4,
+//     nama: "Sumitro",
+//     xp: "240",
+//   },
+//   {
+//     id: 5,
+//     nama: "Putranto",
+//     xp: "222",
+//   },
+//   {
+//     id: 6,
+//     nama: "Hayati",
+//     xp: "211",
+//   },
+//   {
+//     id: 7,
+//     nama: "Kinan",
+//     xp: "192",
+//   },
+//   {
+//     id: 8,
+//     nama: "Anto",
+//     xp: "80",
+//   },
+// ];
 
 const LeaderboardScreen = () => {
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    const modulesRef = firestore().collection("users");
+
+    modulesRef
+    .orderBy("xp", "desc")
+    .get()
+    .then((querySnapshot) => {
+      const newData = querySnapshot.docs.map((doc) => {
+        return {
+          id: doc.id,
+          ...doc.data(),
+        };
+      });
+      setData(newData);
+    })
+    .catch((error) => {
+      console.error("Error fetching data: ", error);
+    });
+  }, []);
+
   return (
     <SafeAreaView style={styles.container}>
       <HeaderNonTabs headerName="Leaderboard" />

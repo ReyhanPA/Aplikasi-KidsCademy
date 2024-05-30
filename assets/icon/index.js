@@ -30,6 +30,8 @@ import IconBack from "./back.svg";
 import IconPerson from "./person.svg";
 import IconMoney from "./money.svg";
 import IconXP from "./xp.svg";
+import IconMaterial from "./material.svg";
+import IconComputer from "./computer.svg";
 
 export {
   IconDashboard, 
@@ -49,4 +51,6 @@ export {
   IconPerson,
   IconMoney,
   IconXP,
+  IconMaterial,
+  IconComputer
 };
