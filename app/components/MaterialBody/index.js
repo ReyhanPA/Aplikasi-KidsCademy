@@ -3,12 +3,12 @@ import React from "react";
 import { ScrollView, Text } from "react-native";
 import YoutubePlayer from "react-native-youtube-iframe";
 
-const MaterialBody = ({ material }) => {
+const MaterialBody = () => {
   const item = useLocalSearchParams();
 
   return (
     <ScrollView className="flex-1 h-full w-full bg-white px-4 ">
-      <Text className="text-xl text-black mb-4">konten {item.name}</Text>
+      <Text className="text-xl text-black mb-4">Video {item.name}</Text>
 
       <YoutubePlayer 
        height={300}

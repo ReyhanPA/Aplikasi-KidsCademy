@@ -2,6 +2,8 @@ import React from "react";
 import { View, ScrollView, Text, TouchableOpacity } from "react-native";
 import { router } from "expo-router";
 import { IconNoImage, IconLetterA, IconLetterX, IconLetterY, IconAnimal, IconFruit, IconDragon, IconAddition, IconBasicLogic, IconBasketball } from "../../../assets/icon";
+import firestore from "@react-native-firebase/firestore";
+import { useEffect, useState } from "react";
 
 const material = [
   {
@@ -90,10 +92,31 @@ const renderIconSubject = (Icon) => {
   }
 };
 const SubjectBody = ({ subject }) => {
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    const modulesRef = firestore().collection("libraries");
+
+    modulesRef
+    .get()
+    .then((querySnapshot) => {
+      const newData = querySnapshot.docs.map((doc) => {
+        return {
+          id: doc.id,
+          ...doc.data(),
+        };
+      });
+      setData(newData);
+    })
+    .catch((error) => {
+      console.error("Error fetching data: ", error);
+    });
+  }, []);
+
   return (
     <ScrollView className="flex-1 h-full w-full bg-white px-4 ">
       <View className="flex flex-row flex-wrap justify-center gap-7">
-        {material.map((item) => {
+        {data.map((item) => {
           if (item.subjek === subject) {
             return (
               <View key={item.id}>
@@ -106,7 +129,7 @@ const SubjectBody = ({ subject }) => {
                   <View className="after:h-24  after:w-3 after:rounded-sm after:bg-emerald-200 after:absolute after:right-4 after:bottom-0 after:-z-10" />
                   <View className="after:h-2  after:w-8 after:rounded-sm after:bg-emerald-200 after:absolute after:left-0 after:top-4 after:-z-10" />
                 </TouchableOpacity>
-                <Text className="text-black text-center">{item.name}</Text>
+                <Text className="text-black text-center w-40">{item.name}</Text>
               </View>
             );
           }
