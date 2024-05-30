@@ -7,63 +7,64 @@ const material = [
   {
     id: 1,
     name: "Huruf A",
-    subject: "Huruf",
+    subjek: "Huruf",
+    idVideo: "HOA71GLvMiQ"
   },
-  {
-    id: 2,
-    name: "Video Huruf A",
-    subject: "Huruf",
-  },
-  {
-    id: 3,
-    name: "Huruf Y",
-    subject: "Huruf",
-  },
-  {
-    id: 4,
-    name: "Video Huruf Y",
-    subject: "Huruf",
-  },
-  {
-    id: 5,
-    name: "Nama Hewan",
-    subject: "Baca",
-  },
-  {
-    id: 6,
-    name: "Penjumlahan Dasar",
-    subject: "Hitung",
-  },
-  {
-    id: 7,
-    name: "Logika Dasar",
-    subject: "Logika",
-  },
-  {
-    id: 8,
-    name: "Video Viral Bagas Dribble",
-    subject: "Hiburan",
-  },
-  {
-    id: 9,
-    name: "Huruf Z",
-    subject: "Huruf",
-  },
-  {
-    id: 10,
-    name: "Video Huruf Z",
-    subject: "Huruf",
-  },
-  {
-    id: 9,
-    name: "Nama Buah",
-    subject: "Baca",
-  },
-  {
-    id: 10,
-    name: "Kisah Naga",
-    subject: "Baca",
-  },
+  // {
+  //   id: 2,
+  //   name: "Video Huruf A",
+  //   subject: "Huruf",
+  // },
+  // {
+  //   id: 3,
+  //   name: "Huruf Y",
+  //   subject: "Huruf",
+  // },
+  // {
+  //   id: 4,
+  //   name: "Video Huruf Y",
+  //   subject: "Huruf",
+  // },
+  // {
+  //   id: 5,
+  //   name: "Nama Hewan",
+  //   subject: "Baca",
+  // },
+  // {
+  //   id: 6,
+  //   name: "Penjumlahan Dasar",
+  //   subject: "Hitung",
+  // },
+  // {
+  //   id: 7,
+  //   name: "Logika Dasar",
+  //   subject: "Logika",
+  // },
+  // {
+  //   id: 8,
+  //   name: "Video Viral Bagas Dribble",
+  //   subject: "Hiburan",
+  // },
+  // {
+  //   id: 9,
+  //   name: "Huruf Z",
+  //   subject: "Huruf",
+  // },
+  // {
+  //   id: 10,
+  //   name: "Video Huruf Z",
+  //   subject: "Huruf",
+  // },
+  // {
+  //   id: 9,
+  //   name: "Nama Buah",
+  //   subject: "Baca",
+  // },
+  // {
+  //   id: 10,
+  //   name: "Kisah Naga",
+  //   subject: "Baca",
+  // },
 ];
 const renderIconSubject = (Icon) => {
   if (Icon === "Huruf A" || Icon === "Video Huruf A") {
@@ -93,11 +94,11 @@ const SubjectBody = ({ subject }) => {
     <ScrollView className="flex-1 h-full w-full bg-white px-4 ">
       <View className="flex flex-row flex-wrap justify-center gap-7">
         {material.map((item) => {
-          if (item.subject === subject) {
+          if (item.subjek === subject) {
             return (
               <View key={item.id}>
                 <TouchableOpacity
-                  onPress={() => router.push({ pathname: "../../../(tabs)/libraryScreen/[subjectScreen]/[materialScreen]", params: { material: item.name } })}
+                  onPress={() => router.push({ pathname: "../../../(tabs)/libraryScreen/[subjectScreen]/[materialScreen]", params: item })}
                   activeOpacity={0.7}
                   className={`h-24 w-40 my-2 px-4 py-6 rounded-3xl bg-[#FFFFFF] shadow-lg shadow-black border border-[#53AC65]`}
                 >
