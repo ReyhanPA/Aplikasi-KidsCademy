@@ -1,11 +1,10 @@
-import React, { useState, useEffect, useCallback } from "react";
-import { View, ScrollView, Text, TouchableOpacity } from "react-native";
+import React, { useState, useEffect } from "react";
+import { View, ScrollView, Text, TouchableOpacity, Alert } from "react-native";
 import { IconClick, IconClickBlack, IconArrowDown } from "../../../assets/icon";
 import { router } from 'expo-router';
 import { useAuth } from "../../../contexts/AuthProvider";
 import firestore from "@react-native-firebase/firestore";
 import Spinner from 'react-native-loading-spinner-overlay';
-import { useFocusEffect } from '@react-navigation/native';
 
 const optionLearningPath = [
   {
@@ -145,7 +144,14 @@ const DashboardBody = (props) => {
               <View className="h-3 w-3 rounded-full bg-[#58BCEB]"/>
             </View>
             <TouchableOpacity 
-              onPress={() => router.navigate({pathname: "../../[moduleScreen]/[moduleQuestion]", params: {moduleID: item.id, moduleName: item.name}})} 
+              onPress={() => dataUser.energi >= 50 ? (
+                router.navigate({pathname: "../../[moduleScreen]/[moduleQuestion]", params: {moduleID: item.id, moduleName: item.name}})
+              ) : (
+                Alert.alert(
+                  "Energi Tidak Cukup",
+                  "Minimal tersedia 50 energi, silakan mengisi energi terlebih dahulu"
+                )
+              )}
               activeOpacity={0.7} 
               key={item.id} 
               className={`flex justify-between h-28 w-60 my-2 px-4 py-6 rounded-2xl ${moduleDone.includes(item.id) ? 'bg-[#0979BD]' : 'bg-[#DFE3E6]'} shadow-lg shadow-black`}

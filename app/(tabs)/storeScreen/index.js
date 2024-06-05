@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, TouchableOpacity, Modal, StyleSheet } from "react-native";
+import { View, Text, TouchableOpacity, Modal, StyleSheet, Alert } from "react-native";
 import { IconDoubleElecttrify } from "../../../assets/icon";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useAuth } from "../../../contexts/AuthProvider";
 import firestore from "@react-native-firebase/firestore";
+import Spinner from 'react-native-loading-spinner-overlay';
 
 const energiList = [
   {
@@ -111,7 +112,11 @@ const StoreScreen = () => {
         console.error("Error in updateUserData: ", error);
       });
     } else {
-      alert("Saldo tidak mencukupi");
+      setModalVisible(false);
+      Alert.alert(
+        "Saldo Tidak Cukup",
+        "Silakan mengisi saldo terlebih dahulu"
+      );
     }
   };
   
@@ -122,7 +127,7 @@ const StoreScreen = () => {
   
   const [data, setData] = useState({});
   const [loading, setLoading] = useState(true);
-  const { isLogin, signOut, user } = useAuth();
+  const { isLogin, user } = useAuth();
   
   useEffect(() => {
     const fetchData = async () => {
@@ -145,7 +150,15 @@ const StoreScreen = () => {
     };
   
     fetchData();
-  }, [user]);  
+  }, [user]);
+
+  if (loading) {
+    return (
+      <SafeAreaView className="flex py-2 bg-white flex-column">
+        <Spinner visible={loading} />
+      </SafeAreaView>
+    );
+  }
 
   return (
     <SafeAreaView className="flex py-2 bg-white flex-column">

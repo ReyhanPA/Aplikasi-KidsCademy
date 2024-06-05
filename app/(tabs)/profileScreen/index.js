@@ -153,9 +153,9 @@ const ProfileScreen = () => {
   }
 
   return (
-    <SafeAreaView className="flex-1 py-2 bg-white">
+    <SafeAreaView style={styles.container}>
       {isLogin ? (
-        <View>
+        <View className="bg-white">
           <View className="h-1/2" dir="ltr">
             <View>
               <Text className="text-xl my-2 mx-4 font-bold">Profile</Text>
@@ -170,7 +170,7 @@ const ProfileScreen = () => {
           </View>
         </View>
       ) : (
-        <View>
+        <View className="bg-white">
           <View className="h-1/2" dir="ltr">
             <View>
               <Text className="text-xl my-2 mx-4 font-bold">Profile</Text>
