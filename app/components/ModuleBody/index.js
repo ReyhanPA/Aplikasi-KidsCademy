@@ -42,7 +42,6 @@ const ModuleBody = (props) => {
 
   const handleNextModule = async () => {
     setModalVisible(false);
-    router.replace("../../(tabs)/dashboardScreen");
   
     try {
       const userRef = firestore().collection("users").doc(user.uid);
@@ -51,17 +50,19 @@ const ModuleBody = (props) => {
         const userData = userDoc.data();
         const moduleDone = userData.moduleDone || [];
         let xp = userData.xp || 0;
+        let energi = userData.energi || 0;
 
         if (!moduleDone.includes(selectedModule.id)) {
           moduleDone.push(selectedModule.id);
           xp += totalBenar * 10;
+          energi -= (5 - totalBenar) * 10;
         }
 
         await userRef.update({
           moduleDone,
-          xp
+          xp,
+          energi
         });
-        console.log(userData)
       } else {
         console.error("No such document!");
       }
@@ -70,6 +71,7 @@ const ModuleBody = (props) => {
     }
 
     totalBenar = 0;
+    router.back();
   };
   
 

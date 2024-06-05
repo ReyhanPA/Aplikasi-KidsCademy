@@ -34,7 +34,7 @@ const SubjectBody = ({ subject }) => {
             return (
               <View key={item.id}>
                 <TouchableOpacity
-                  onPress={() => router.push({ pathname: "../../../(tabs)/libraryScreen/[subjectScreen]/[materialScreen]", params: item })}
+                  onPress={() => router.navigate({ pathname: "../../../(tabs)/libraryScreen/[subjectScreen]/[materialScreen]", params: item })}
                   activeOpacity={0.7}
                   className={`h-24 w-40 rounded-3xl bg-[#FFFFFF] border-2 border-[#1A8EFD]`}
                 >

@@ -130,7 +130,7 @@ const LoginScreen = () => {
           <Text className="text-md text-slate-400 font-bold">atau</Text>
           <AuthButton
             onPress={() =>
-              router.push({ pathname: "../../../(authScreen)/registerScreen" })
+              router.navigate({ pathname: "../../../(authScreen)/registerScreen" })
             }
             text="Daftar"
           />

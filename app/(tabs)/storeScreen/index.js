@@ -83,20 +83,14 @@ const StoreScreen = () => {
   
           if (userDoc.exists) {
             const userData = userDoc.data();
-            console.log("Current user data: ", userData);
-  
             const updatedEnergi = userData.energi + energiList[currentId - 1].energi;
             const updatedSaldo = userData.saldo - energiList[currentId - 1].harga;
   
             userData.energi = updatedEnergi;
             userData.saldo = updatedSaldo;
   
-            console.log("Updated user data: ", userData);
-  
             await userRef.update(userData);
-            console.log("User data successfully updated");
-  
-            // Update the state directly here
+            
             setData(prevData => ({
               ...prevData,
               energi: updatedEnergi,

@@ -4,55 +4,13 @@ import { HeaderNonTabs, LeaderboardBody } from "../components";
 import { useState, useEffect } from "react";
 import firestore from "@react-native-firebase/firestore";
 import { useAuth } from "../../contexts/AuthProvider";
-
-// const data = [
-//   {
-//     id: 1,
-//     nama: "Santi",
-//     xp: "278",
-//   },
-//   {
-//     id: 2,
-//     nama: "Andika",
-//     xp: "260",
-//   },
-//   {
-//     id: 3,
-//     nama: "Putri",
-//     xp: "250",
-//   },
-//   {
-//     id: 4,
-//     nama: "Sumitro",
-//     xp: "240",
-//   },
-//   {
-//     id: 5,
-//     nama: "Putranto",
-//     xp: "222",
-//   },
-//   {
-//     id: 6,
-//     nama: "Hayati",
-//     xp: "211",
-//   },
-//   {
-//     id: 7,
-//     nama: "Kinan",
-//     xp: "192",
-//   },
-//   {
-//     id: 8,
-//     nama: "Anto",
-//     xp: "80",
-//   },
-// ];
+import Spinner from 'react-native-loading-spinner-overlay';
 
 const LeaderboardScreen = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [dataUser, setUserData] = useState([]);
-  const { isLogin, signOut, user } = useAuth();
+  const { isLogin, user } = useAuth();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -96,6 +54,15 @@ const LeaderboardScreen = () => {
         console.error("Error fetching data: ", error);
       });
   }, []);
+
+  if (loading) {
+    return (
+      <SafeAreaView style={styles.container}>
+        <HeaderNonTabs headerName="Leaderboard" />
+        <Spinner visible={loading} />
+      </SafeAreaView>
+    );
+  }
 
   return (
     <SafeAreaView style={styles.container}>

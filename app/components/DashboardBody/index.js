@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { View, ScrollView, Text, TouchableOpacity } from "react-native";
 import { IconClick, IconClickBlack, IconArrowDown } from "../../../assets/icon";
 import { router } from 'expo-router';
 import { useAuth } from "../../../contexts/AuthProvider";
 import firestore from "@react-native-firebase/firestore";
 import Spinner from 'react-native-loading-spinner-overlay';
+import { useFocusEffect } from '@react-navigation/native';
 
 const optionLearningPath = [
   {
@@ -58,11 +59,10 @@ const Dropdown = ({ openDropdown, optionDropdown, handleOpenDropdown, handleDrop
   );
 };
 
-const DashboardBody = () => {
-
+const DashboardBody = (props) => {
+  const { dataUser } = props;
   const { isLogin, user } = useAuth();
   const [data, setData] = useState([]);
-  const [dataUser, setDataUser] = useState([]);
   const [loading, setLoading] = useState(true);
   const [openDropdown, setOpenDropdown] = useState(false);
   const [optionDropdown, setOptionDropdown] = useState(optionLearningPath[0].label);
@@ -79,20 +79,11 @@ const DashboardBody = () => {
       setFilterDropdown(["2-4", "5-6", "7-8"]);
     }
   }, [optionDropdown]);
-
+  
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
       try {
-        if (user && user.uid && isLogin) {
-          const userRef = firestore().collection("users").doc(user.uid);
-          const docSnapshot = await userRef.get();
-          if (docSnapshot.exists) {
-            setDataUser({ id: docSnapshot.id, ...docSnapshot.data() });
-          } else {
-            console.error("No such document!");
-          }
-        }
         const modulesRef = firestore().collection("modules");
         const querySnapshot = await modulesRef.orderBy("learningPath", "asc").orderBy("name", "asc").where("learningPath", "in", filterDropdown).get();
         const newData = querySnapshot.docs.map((doc) => ({
@@ -106,9 +97,9 @@ const DashboardBody = () => {
         setLoading(false);
       }
     };
-    
+
     fetchData();
-  }, [optionDropdown, filterDropdown, user]);
+  }, [optionDropdown, filterDropdown]);
 
   const handleOpenDropdown = () => {
     setOpenDropdown(!openDropdown);
@@ -131,7 +122,7 @@ const DashboardBody = () => {
   } else {
     moduleDone = [];
   }
-  
+
   return (
     <ScrollView className="flex-1 h-full w-full bg-white px-4">
       <Text className="text-xl font-semibold text-black">Learning Path</Text>
@@ -154,7 +145,7 @@ const DashboardBody = () => {
               <View className="h-3 w-3 rounded-full bg-[#58BCEB]"/>
             </View>
             <TouchableOpacity 
-              onPress={() => router.push({pathname: "../../[moduleScreen]/[moduleQuestion]", params: {moduleID: item.id, moduleName: item.name}})} 
+              onPress={() => router.navigate({pathname: "../../[moduleScreen]/[moduleQuestion]", params: {moduleID: item.id, moduleName: item.name}})} 
               activeOpacity={0.7} 
               key={item.id} 
               className={`flex justify-between h-28 w-60 my-2 px-4 py-6 rounded-2xl ${moduleDone.includes(item.id) ? 'bg-[#0979BD]' : 'bg-[#DFE3E6]'} shadow-lg shadow-black`}
