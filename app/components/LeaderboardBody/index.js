@@ -4,6 +4,7 @@ import {
   IconProfilePicture,
   IconMedal
 } from "../../../assets/icon";
+import { useAuth } from "../../../contexts/AuthProvider";
 
 const getColorByRank = (rank) => {
   switch (rank) {
@@ -20,6 +21,7 @@ const getColorByRank = (rank) => {
 
 const LeaderboardBody = (props) => {
   const { data, dataUser } = props;
+  const { isLogin } = useAuth();
 
   return (
     <View className="flex-1 w-full h-full bg-white">
@@ -28,7 +30,7 @@ const LeaderboardBody = (props) => {
           <Text className="text-xl font-medium text-[#969696]">Yuk capai peringkat tertinggi!</Text>
           <View className="flex flex-row items-center justify-center gap-2">
             <IconMedal height={18} width={18} />
-            <Text className="text-xl font-medium text-black">Ranking saat ini : {dataUser.ranking}</Text>
+            <Text className="text-xl font-medium text-black">Ranking saat ini : {isLogin ? `${dataUser.ranking}` : `-`}</Text>
           </View>
         </View>
       </View>

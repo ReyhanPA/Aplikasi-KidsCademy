@@ -60,7 +60,7 @@ const Dropdown = ({ openDropdown, optionDropdown, handleOpenDropdown, handleDrop
 
 const DashboardBody = (props) => {
   const { dataUser } = props;
-  const { isLogin, user } = useAuth();
+  const { isLogin } = useAuth();
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [openDropdown, setOpenDropdown] = useState(false);
@@ -144,18 +144,30 @@ const DashboardBody = (props) => {
               <View className="h-3 w-3 rounded-full bg-[#58BCEB]"/>
             </View>
             <TouchableOpacity 
-              onPress={() => dataUser.energi >= 50 ? (
-                router.navigate({pathname: "../../[moduleScreen]/[moduleQuestion]", params: {moduleID: item.id, moduleName: item.name}})
-              ) : (
-                Alert.alert(
-                  "Energi Tidak Cukup",
-                  "Minimal tersedia 50 energi, silakan mengisi energi terlebih dahulu"
+              onPress={() => isLogin ? (
+                dataUser.energi >= 50 ? (
+                  router.navigate({pathname: "../../[moduleScreen]/[moduleQuestion]", params: {moduleID: item.id, moduleName: item.name}})
+                ) : (
+                  Alert.alert(
+                    "Energi Tidak Cukup",
+                    "Minimal tersedia 50 energi, silakan mengisi energi terlebih dahulu"
+                  )
                 )
+              ) : (
+                router.navigate({pathname: "../../[moduleScreen]/[moduleQuestion]", params: {moduleID: item.id, moduleName: item.name}})
               )}
               activeOpacity={0.7} 
               key={item.id} 
               className={`flex justify-between h-28 w-60 my-2 px-4 py-6 rounded-2xl ${moduleDone.includes(item.id) ? 'bg-[#0979BD]' : 'bg-[#DFE3E6]'} shadow-lg shadow-black`}
             >
+              {moduleDone.includes(item.id) ? (
+                <View className=" w-60 h-28 absolute">
+                  <View className="h-20 w-10 rounded-b-xl bg-[#4896C6] absolute top-0 left-6"/>
+                  <View className="h-20 w-10 rounded-t-xl bg-[#4896C6] absolute bottom-0 right-6"/>
+                </View>
+              ) : (
+                <View/>
+              )}
               <View className="flex flex-row items-center gap-2">
                 <Text className={`text-3xl font-medium ${moduleDone.includes(item.id) ? 'text-white' : 'text-black'} items-center`}>{item.name}</Text> 
                 {moduleDone.includes(item.id) ? <IconClick height={25} width={25}/> : <IconClickBlack height={25} width={25}/>}
