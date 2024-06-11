@@ -1,11 +1,10 @@
 import React from "react";
 import { ScrollView, View, Text } from "react-native";
 import {
-  IconArrowFill,
-  IconClock,
   IconProfilePicture,
+  IconMedal
 } from "../../../assets/icon";
-import { useState, useAuth, useEffect } from "react";
+import { useAuth } from "../../../contexts/AuthProvider";
 
 const getColorByRank = (rank) => {
   switch (rank) {
@@ -22,22 +21,16 @@ const getColorByRank = (rank) => {
 
 const LeaderboardBody = (props) => {
   const { data, dataUser } = props;
+  const { isLogin } = useAuth();
 
   return (
     <View className="flex-1 w-full h-full bg-white">
       <View className="flex flex-row w-full h-auto p-4">
-        <View className="flex-1 items-center justify-center h-20 rounded-l-2xl border-l-2 border-y-2 border-[#898787]">
-          <Text className="text-xl font-medium text-[#969696]">Hari ini</Text>
-          <View className="flex flex-row items-ceter justify-center gap-2 pr-2">
-            <IconArrowFill height={25} width={25} />
-            <Text className="text-xl font-medium text-black">1 posisi</Text>
-          </View>
-        </View>
-        <View className="flex-1 items-center justify-center h-20 rounded-r-2xl border-2 border-[#898787]">
-          <Text className="text-xl font-medium text-[#969696]">Sisa waktu</Text>
-          <View className="flex flex-row items-ceter justify-center gap-2 pr-2">
-            <IconClock height={25} width={25} />
-            <Text className="text-xl font-medium text-black">6 hari</Text>
+        <View className="flex-1 items-center justify-center h-20 rounded-2xl border-2 border-[#898787]">
+          <Text className="text-xl font-medium text-[#969696]">Yuk capai peringkat tertinggi!</Text>
+          <View className="flex flex-row items-center justify-center gap-2">
+            <IconMedal height={18} width={18} />
+            <Text className="text-xl font-medium text-black">Ranking saat ini : {isLogin ? `${dataUser.ranking}` : `-`}</Text>
           </View>
         </View>
       </View>

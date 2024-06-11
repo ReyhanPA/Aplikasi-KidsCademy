@@ -46,7 +46,7 @@ const LibraryBody = () => {
       <View className="flex justify-center items-center">
         {subject.map((item) => (
           <TouchableOpacity
-            onPress={() => router.push({ pathname: "../../(tabs)/libraryScreen/[subjectScreen]", params: { subject: item.name } })}
+            onPress={() => router.navigate({ pathname: "../../(tabs)/libraryScreen/[subjectScreen]", params: { subject: item.name } })}
             activeOpacity={0.7}
             key={item.id}
             style={{ backgroundColor: item.color }}

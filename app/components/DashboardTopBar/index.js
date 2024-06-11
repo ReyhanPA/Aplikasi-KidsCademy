@@ -47,7 +47,7 @@ const DashboardTopBar = (props) => {
         <Text className="text-xl font-semibold text-[#1A8EFD]">XP</Text>
         <Text className="text-xl font-semibold text-black">{isLogin ? data.xp : `-`}</Text>
       </View>
-      <TouchableOpacity onPress={() => router.push({pathname: `${pathname}`})} activeOpacity={0.7}>
+      <TouchableOpacity onPress={() => router.navigate({pathname: `${pathname}`})} activeOpacity={0.7}>
         <View className="flex flex-row h-8 w-24 items-center justify-center bg-[#EFF9FF] rounded-full">
           <IconMedal height={18} width={18} />
           <Text className="text-xl font-semibold text-black items-center">{isLogin ? `#${data.ranking}` : `-`}</Text>

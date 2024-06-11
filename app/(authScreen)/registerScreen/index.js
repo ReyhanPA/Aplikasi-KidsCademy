@@ -186,7 +186,7 @@ const RegisterScreen = () => {
           <Text className="text-md text-slate-400 font-bold">atau</Text>
           <AuthButton
             onPress={() =>
-              router.push({ pathname: "../../../(authScreen)/loginScreen" })
+              router.navigate({ pathname: "../../../(authScreen)/loginScreen" })
             }
             text="Masuk"
           />

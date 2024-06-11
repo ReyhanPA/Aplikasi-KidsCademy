@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, TouchableOpacity, Modal, StyleSheet } from "react-native";
+import { View, Text, TouchableOpacity, Modal, StyleSheet, Alert } from "react-native";
 import { IconDoubleElecttrify } from "../../../assets/icon";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useAuth } from "../../../contexts/AuthProvider";
+import { router } from "expo-router";
 import firestore from "@react-native-firebase/firestore";
+import Spinner from "react-native-loading-spinner-overlay";
 
 const energiList = [
   {
@@ -75,61 +77,63 @@ const StoreScreen = () => {
   const [currentId, setCurrentId] = useState(null);
 
   const handleYa = () => {
-    if (data.saldo > energiList[currentId - 1].harga) {
-      const updateUserData = async () => {
-        try {
-          const userRef = firestore().collection("users").doc(user.uid);
-          const userDoc = await userRef.get();
-  
-          if (userDoc.exists) {
-            const userData = userDoc.data();
-            console.log("Current user data: ", userData);
-  
-            const updatedEnergi = userData.energi + energiList[currentId - 1].energi;
-            const updatedSaldo = userData.saldo - energiList[currentId - 1].harga;
-  
-            userData.energi = updatedEnergi;
-            userData.saldo = updatedSaldo;
-  
-            console.log("Updated user data: ", userData);
-  
-            await userRef.update(userData);
-            console.log("User data successfully updated");
-  
-            // Update the state directly here
-            setData(prevData => ({
-              ...prevData,
-              energi: updatedEnergi,
-              saldo: updatedSaldo
-            }));
-          } else {
-            console.error("No such document!");
+    if (isLogin) {
+      if (data.saldo > energiList[currentId - 1].harga) {
+        const updateUserData = async () => {
+          try {
+            const userRef = firestore().collection("users").doc(user.uid);
+            const userDoc = await userRef.get();
+
+            if (userDoc.exists) {
+              const userData = userDoc.data();
+              const updatedEnergi = userData.energi + energiList[currentId - 1].energi;
+              const updatedSaldo = userData.saldo - energiList[currentId - 1].harga;
+
+              userData.energi = updatedEnergi;
+              userData.saldo = updatedSaldo;
+
+              await userRef.update(userData);
+
+              setData((prevData) => ({
+                ...prevData,
+                energi: updatedEnergi,
+                saldo: updatedSaldo,
+              }));
+            } else {
+              console.error("No such document!");
+            }
+          } catch (error) {
+            console.error("Error updating data: ", error);
           }
-        } catch (error) {
-          console.error("Error updating data: ", error);
-        }
-      }
-  
-      updateUserData().then(() => {
+        };
+
+        updateUserData()
+          .then(() => {
+            setModalVisible(false);
+            setCurrentId(null);
+          })
+          .catch((error) => {
+            console.error("Error in updateUserData: ", error);
+          });
+      } else {
         setModalVisible(false);
-        setCurrentId(null);
-      }).catch((error) => {
-        console.error("Error in updateUserData: ", error);
-      });
+        Alert.alert("Saldo Tidak Cukup", "Silakan mengisi saldo terlebih dahulu");
+      }
     } else {
-      alert("Saldo tidak mencukupi");
+      setModalVisible(false);
+      router.navigate({ pathname: "../../(authScreen)/loginScreen" });
     }
   };
-  
+
   const handleTidak = () => {
     setModalVisible(false);
     setCurrentId(null);
   };
-  
+
   const [data, setData] = useState({});
   const [loading, setLoading] = useState(true);
-  const { isLogin, signOut, user } = useAuth();
-  
+  const { isLogin, user } = useAuth();
+
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
@@ -149,9 +153,17 @@ const StoreScreen = () => {
         setLoading(false);
       }
     };
-  
+
     fetchData();
-  }, [user]);  
+  }, [user]);
+
+  if (loading) {
+    return (
+      <SafeAreaView className="flex py-2 bg-white flex-column">
+        <Spinner visible={loading} />
+      </SafeAreaView>
+    );
+  }
 
   return (
     <SafeAreaView className="flex py-2 bg-white flex-column">
@@ -165,27 +177,29 @@ const StoreScreen = () => {
               <CardWarning isEnoughEnergy={true} title="Energimu masih ada" content="Selamat bermain dan jangan lupa mengisinya saat energimu mulai habis ya!" />
             )
           ) : (
-              <CardWarning isEnoughEnergy={true} title="Anda belum login" content="Silahkan login terlebih dahulu untuk melakukan pembelian energi" />        
+            <CardWarning isEnoughEnergy={true} title="Anda belum login" content="Silahkan login terlebih dahulu untuk melakukan pembelian energi" />
           )}
         </View>
         <View className="flex-row justify-center items-center">
-          {isLogin ? ( 
-            <><StoreStats title={data.energi} desc="Energi" /><StoreStats title={data.saldo} desc="Saldo" /></>
+          {isLogin ? (
+            <>
+              <StoreStats title={data.energi} desc="Energi" />
+              <StoreStats title={data.saldo} desc="Saldo" />
+            </>
           ) : (
-            <><StoreStats title="-" desc="Energi" /><StoreStats title="-" desc="Saldo" /></>
+            <>
+              <StoreStats title="-" desc="Energi" />
+              <StoreStats title="-" desc="Saldo" />
+            </>
           )}
         </View>
       </View>
       <View className="h-4/6 mt-8 flex-wrap items-center justify-center flex-row">
         {energiList.map((item) => (
-          <StoreItemCard key={item.id} id={item.id} title={item.energi} desc={item.harga} setModalVisible={setModalVisible} setCurrentId={setCurrentId}/>
+          <StoreItemCard key={item.id} id={item.id} title={item.energi} desc={item.harga} setModalVisible={setModalVisible} setCurrentId={setCurrentId} />
         ))}
       </View>
-      <Modal
-        transparent={true}
-        visible={modalVisible}
-        animationType="slide"
-        onRequestClose={() => setModalVisible(false)}>
+      <Modal transparent={true} visible={modalVisible} animationType="slide" onRequestClose={() => setModalVisible(false)}>
         <View style={styles.modalBackground}>
           <View style={styles.modalContainer}>
             <Text style={styles.modalTitle}>Apakah yakin membeli?</Text>

@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useCallback } from "react";
 import { Text, TouchableOpacity, View, StyleSheet, Modal, SafeAreaView, StatusBar } from "react-native";
 import { IconProfilePicture, IconElectrifity, IconMedal, IconMoney, IconPerson, IconXP } from "../../../assets";
 import { router } from "expo-router";
 import { useAuth } from "../../../contexts/AuthProvider";
 import firestore from "@react-native-firebase/firestore";
 import Spinner from 'react-native-loading-spinner-overlay';
+import { useFocusEffect } from '@react-navigation/native';
 
 const ProfileStats = (props) => {
   const { xp, ranking, energi, saldo } = props;
@@ -57,7 +58,7 @@ const Profile = ({ username, email, isLogin, setModalVisible }) => {
 
 const OutAccountButton = ({ isLogin, setModalVisible }) => {
   return (
-    <TouchableOpacity onPress={() => isLogin ? setModalVisible(true) : router.push({ pathname: "../../../(authScreen)/loginScreen" })}>
+    <TouchableOpacity onPress={() => isLogin ? setModalVisible(true) : router.navigate({ pathname: "../../../(authScreen)/loginScreen" })}>
       <View className="flex flex-row w-36 h-10 border-[#19467E] bg-white border rounded-2xl justify-center px-2">
         <View className="w-2/6 justify-center items-center">
           <IconPerson height={36} width={36} />
@@ -109,28 +110,30 @@ const ProfileScreen = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const { isLogin, signOut, user } = useAuth();
 
-  useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true);
-      try {
-        if (user && user.uid && isLogin) {
-          const userRef = firestore().collection("users").doc(user.uid);
-          const docSnapshot = await userRef.get();
-          if (docSnapshot.exists) {
-            setData({ id: docSnapshot.id, ...docSnapshot.data() });
-          } else {
-            console.error("No such document!");
-          }
+  const fetchData = async () => {
+    setLoading(true);
+    try {
+      if (user && user.uid && isLogin) {
+        const userRef = firestore().collection("users").doc(user.uid);
+        const docSnapshot = await userRef.get();
+        if (docSnapshot.exists) {
+          setData({ id: docSnapshot.id, ...docSnapshot.data() });
+        } else {
+          console.error("No such document!");
         }
-      } catch (error) {
-        console.error("Error fetching data: ", error);
-      } finally {
-        setLoading(false);
       }
-    };
+    } catch (error) {
+      console.error("Error fetching data: ", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-    fetchData();
-  }, [user]);
+  useFocusEffect(
+    useCallback(() => {
+      fetchData();
+    }, [user, isLogin])
+  );
 
   const handleYa = () => {
     setModalVisible(false);
@@ -150,9 +153,9 @@ const ProfileScreen = () => {
   }
 
   return (
-    <SafeAreaView className="flex-1 py-2 bg-white">
+    <SafeAreaView style={styles.container}>
       {isLogin ? (
-        <View>
+        <View className="bg-white">
           <View className="h-1/2" dir="ltr">
             <View>
               <Text className="text-xl my-2 mx-4 font-bold">Profile</Text>
@@ -167,7 +170,7 @@ const ProfileScreen = () => {
           </View>
         </View>
       ) : (
-        <View>
+        <View className="bg-white">
           <View className="h-1/2" dir="ltr">
             <View>
               <Text className="text-xl my-2 mx-4 font-bold">Profile</Text>

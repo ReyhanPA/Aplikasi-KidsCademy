@@ -42,7 +42,6 @@ const ModuleBody = (props) => {
 
   const handleNextModule = async () => {
     setModalVisible(false);
-    router.replace("../../(tabs)/dashboardScreen");
   
     try {
       const userRef = firestore().collection("users").doc(user.uid);
@@ -51,26 +50,45 @@ const ModuleBody = (props) => {
         const userData = userDoc.data();
         const moduleDone = userData.moduleDone || [];
         let xp = userData.xp || 0;
-
+        let energi = userData.energi || 0;
+  
         if (!moduleDone.includes(selectedModule.id)) {
           moduleDone.push(selectedModule.id);
           xp += totalBenar * 10;
+          energi -= (5 - totalBenar) * 10;
         }
-
+  
         await userRef.update({
           moduleDone,
-          xp
+          xp,
+          energi
         });
-        console.log(userData)
+  
+        const usersRef = firestore().collection("users").orderBy("xp", "desc");
+        const querySnapshot = await usersRef.get();
+        const users = querySnapshot.docs.map((doc, index) => ({
+          id: doc.id,
+          ...doc.data(),
+          ranking: index + 1
+        }));
+  
+        const updatePromises = users.map((user) => {
+          const userRankingRef = firestore().collection("users").doc(user.id);
+          return userRankingRef.update({ ranking: user.ranking });
+        });
+  
+        await Promise.all(updatePromises);
       } else {
         console.error("No such document!");
       }
     } catch (error) {
       console.error("Error updating document: ", error);
     }
-
+  
     totalBenar = 0;
+    router.back();
   };
+  
   
 
   const currentQuestion = selectedModule.soal[currentQuestionIndex];
